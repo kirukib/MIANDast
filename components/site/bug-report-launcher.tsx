@@ -134,7 +134,7 @@ export function BugReportLauncher() {
           open && "border-foreground",
         )}
         onClick={() => setOpen((v) => !v)}
-        whileHover={reduce ? undefined : { y: -1 }}
+        whileHover={reduce ? undefined : { y: -1, scale: 1.06 }}
         whileTap={reduce ? undefined : { scale: 0.98 }}
       >
         {!reduce && !open ? (

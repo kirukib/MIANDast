@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { BrandLogo } from "@/components/site/brand-logo";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/components/motion";
 
 /**
- * Customer-app mock: logo-only MIAN badge expands on hover into a short report iframe.
+ * Customer-app mock: logo-only badge. Hover enlarges the mark; click opens the short embed form.
  */
 export function EmbedHostPreview({
   src = "/embed/report",
@@ -16,6 +17,8 @@ export function EmbedHostPreview({
   className?: string;
   height?: number;
 }) {
+  const reduce = useReducedMotion();
+  const [hover, setHover] = useState(false);
   const [open, setOpen] = useState(false);
 
   return (
@@ -36,12 +39,7 @@ export function EmbedHostPreview({
         </span>
       </div>
 
-      <div
-        className="relative"
-        style={{ minHeight: height }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
+      <div className="relative" style={{ minHeight: height }}>
         <div className="pointer-events-none space-y-3 p-4 opacity-40" aria-hidden>
           <div className="h-3 w-1/3 bg-[#1f1f1f]" />
           <div className="h-2 w-2/3 bg-[#1a1a1a]" />
@@ -52,43 +50,49 @@ export function EmbedHostPreview({
           </div>
         </div>
 
-        <div
-          className={cn(
-            "absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2",
-            "transition-[width] duration-200 ease-[var(--ease-out)]",
-            open ? "w-[min(100%-1.5rem,300px)]" : "w-auto",
-          )}
-        >
+        <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2">
+          {open ? (
+            <div className="w-[min(100vw-3rem,300px)] overflow-hidden border border-[#2e2e2e] bg-[#0a0a0a] shadow-[0_12px_40px_rgb(0_0_0/0.45)]">
+              <iframe
+                title="MIAN report embed"
+                src={src}
+                className="block w-full border-0 bg-[#0a0a0a]"
+                style={{ height: 200 }}
+              />
+            </div>
+          ) : null}
+
+          {/* Hover: larger logo only — no wordmark / labels */}
           <div
             className={cn(
-              "origin-bottom-right overflow-hidden border border-[#2e2e2e] bg-[#0a0a0a]",
-              "shadow-[0_12px_40px_rgb(0_0_0/0.45)]",
-              "transition-[opacity,transform,max-height,width] duration-200 ease-[var(--ease-out)]",
-              open
-                ? "pointer-events-auto max-h-[220px] w-full scale-100 opacity-100"
-                : "pointer-events-none max-h-0 w-0 scale-95 opacity-0",
+              "pointer-events-none absolute bottom-full right-0 mb-2",
+              "transition-[opacity,transform] duration-200 ease-[var(--ease-out)]",
+              hover && !open
+                ? "opacity-100 scale-100 translate-y-0"
+                : "opacity-0 scale-90 translate-y-1",
             )}
+            aria-hidden
           >
-            <iframe
-              title="MIAN DAST report embed"
-              src={src}
-              className="block w-full border-0 bg-[#0a0a0a]"
-              style={{ height: 200 }}
-              tabIndex={open ? 0 : -1}
-            />
+            <div className="relative flex size-16 items-center justify-center border border-[#2e2e2e] bg-[#0a0a0a] shadow-[0_12px_32px_rgb(0_0_0/0.4)]">
+              <BrandLogo linked={false} variant="mark" className="!h-10" />
+              {!reduce ? <span className="logo-shine" /> : null}
+            </div>
           </div>
 
           <button
             type="button"
             aria-expanded={open}
-            aria-label={open ? "Collapse MIAN embed" : "Expand MIAN embed"}
-            onFocus={() => setOpen(true)}
+            aria-label={open ? "Close MIAN embed" : "Open MIAN embed"}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onFocus={() => setHover(true)}
+            onBlur={() => setHover(false)}
             onClick={() => setOpen((v) => !v)}
             className={cn(
               "group relative size-11 flex items-center justify-center border border-[#2e2e2e] bg-[#0a0a0a]",
               "transition-[border-color,transform] duration-150 ease-[var(--ease-out)]",
               "hover:border-[#ededed] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ededed]",
-              open && "border-[#ededed]",
+              (open || hover) && "border-[#ededed]",
             )}
           >
             <BrandLogo
