@@ -180,9 +180,9 @@ export function FooterDrawing() {
 
         <rect x="150" y="60" width="600" height={H - 60} fill="url(#ft-dots)" stroke="none" className="text-border" />
 
-        <g className="ft-draw" style={{ "--ft-d": "0ms" } as React.CSSProperties}>
+        <g className="ft-draw ft-scope" style={{ "--ft-d": "0ms" } as React.CSSProperties}>
           <path d="M150 30 V44 M750 30 V44 M150 37 H410 M490 37 H750" pathLength={1} />
-          <text x="450" y="40" textAnchor="middle" fill="currentColor" stroke="none" style={LABEL}>
+          <text x="450" y="40" textAnchor="middle" fill="currentColor" stroke="none" style={LABEL} className="ft-scope-label">
             SIGNED SCOPE
           </text>
         </g>
@@ -195,7 +195,7 @@ export function FooterDrawing() {
           strokeWidth="1.25"
           pathLength={1}
         />
-        <text x="160" y="76" fill="currentColor" stroke="none" style={LABEL}>
+        <text x="160" y="76" fill="currentColor" stroke="none" style={LABEL} className="ft-scope-label">
           SCOPE · SHA256:9F3A…C21E
         </text>
 
@@ -321,14 +321,14 @@ export function FooterDrawing() {
             style={{ "--ft-d": `${1000 + i * 80}ms` } as React.CSSProperties}
           >
             <path
-              className="ft-bus"
+              className="ft-bus-deny"
               d={trace([[712 + i * 8, 206], [712 + i * 8, h.y + 14], [742, h.y + 14]])}
               pathLength={1}
             />
-            <path d={`M742 ${h.y + 8} V${h.y + 20}`} strokeWidth="1.5" />
+            <path className="ft-deny-gate" d={`M742 ${h.y + 8} V${h.y + 20}`} strokeWidth="1.5" />
             <path d={`M750 ${h.y + 14} H800`} strokeDasharray="2 3" className="text-border" />
-            <rect x="800" y={h.y} width="112" height="28" />
-            <text x="810" y={h.y + 17} fill="currentColor" stroke="none" style={LABEL}>
+            <rect x="800" y={h.y} width="112" height="28" className="ft-block-box" />
+            <text x="810" y={h.y + 17} fill="currentColor" stroke="none" style={LABEL} className="ft-block-label">
               {h.label}
             </text>
             <path d={`M892 ${h.y + 9}l10 10M902 ${h.y + 9}l-10 10`} strokeWidth="1.25" className="ft-x" />
@@ -342,7 +342,7 @@ export function FooterDrawing() {
             return <path key={y} d={`M${900 - half} ${y} H${900 + half}`} className="text-border" />;
           })}
           <path d={`M879 ${H - 24} L915 ${H - 52} M921 ${H - 24} L885 ${H - 52}`} className="text-border" />
-          <circle cx="900" cy="266" r="4" className="ft-node" />
+          <circle cx="900" cy="266" r="4" className="ft-node ft-node-out" />
           <path d="M888 254 Q900 242 912 254 M882 248 Q900 230 918 248" className="text-border" />
         </g>
 

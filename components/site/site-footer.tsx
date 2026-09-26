@@ -17,7 +17,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-background text-foreground border-t border-border">
       {/* the drawing rests on a full-bleed 1px baseline */}
-      <div className="border-b border-border-strong overflow-hidden">
+      <div className="border-b border-border-strong overflow-hidden ft-footer-band">
         <div className="container-rail pt-16 md:pt-24">
           <FooterDrawing />
         </div>
