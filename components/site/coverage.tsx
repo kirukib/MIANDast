@@ -15,28 +15,36 @@ export function Coverage() {
     <section className="section container-rail">
       <SectionHeader
         eyebrow="Coverage"
-        title={{ a: "Twenty-six engines.", b: "Five vectors." }}
+        title={{ a: "Twenty-six engines.", b: "Six attack classes." }}
       />
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 -m-px">
-        {CELLS.map((c) => (
-          <div
+      <div className="mt-12 md:mt-16 hairline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {CELLS.map((c, i) => (
+          <Link
             key={c.title}
-            className="group border border-border p-5 hover:bg-card transition-colors relative"
+            href="/sandbox"
+            className="group relative p-5 md:p-6 md:min-h-[188px] flex flex-col transition-colors duration-150 hover:!bg-card"
           >
-            <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
-              {c.tag}
-            </span>
-            <h3 className="mt-2 text-[20px] font-medium tracking-[-0.01em]">{c.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{c.body}</p>
-            <span className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <span aria-hidden className="size-1.5 bg-foreground" />
+                {c.tag}
+              </span>
+              <span className="nums">{String(i + 1).padStart(2, "0")}</span>
+            </div>
+            <h3 className="mt-auto pt-6 md:pt-8 text-[20px] font-medium tracking-[-0.01em]">{c.title}</h3>
+            <p className="mt-2 text-[15px] text-muted-foreground text-pretty">{c.body}</p>
+            <span
+              aria-hidden
+              className="absolute bottom-5 right-5 font-mono text-sm opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-150"
+            >
               →
             </span>
-          </div>
+          </Link>
         ))}
       </div>
       <Link
         href="/sandbox"
-        className="mt-8 inline-flex label-mono text-muted-foreground hover:text-foreground"
+        className="mt-8 inline-flex items-center h-10 px-4 border border-border bg-secondary label-mono hover:border-border-strong transition-colors"
       >
         Explore all 26 engines →
       </Link>

@@ -1,60 +1,8 @@
 import Link from "next/link";
 import { SectionHeader } from "@/components/site/primitives";
-import { Button } from "@/components/ui/button";
+import { cn, r2 } from "@/lib/utils";
 
-const GATES = [
-  {
-    id: "01",
-    title: "Attestation gate",
-    body: "Named engineer signs scope before a single probe fires. Ticket + hash on every run.",
-    href: "/#how-it-works",
-    mini: (
-      <div className="font-mono text-[11px] leading-relaxed text-muted-foreground border border-border p-2">
-        ✓ SIGNED · J. Doe (CTO) · JIRA-SEC-214 · sha256:9f3a…
-      </div>
-    ),
-  },
-  {
-    id: "02",
-    title: "Boundary fence",
-    body: "Hard-blocks third-party hosts. Stripe, SendGrid, and CDN origins stay out of scope.",
-    href: "/#how-it-works",
-    mini: (
-      <ul className="font-mono text-[11px] space-y-1 text-muted-foreground">
-        {["stripe.com", "sendgrid.net", "cdn.*"].map((h) => (
-          <li key={h} className="flex justify-between border-b border-border py-1">
-            <span className="line-through">{h}</span>
-            <span className="text-destructive">BLOCKED</span>
-          </li>
-        ))}
-      </ul>
-    ),
-  },
-  {
-    id: "03",
-    title: "Adaptive canary",
-    body: "Live latency probe. At +300% strain the pack throttles or halts automatically.",
-    href: "/#how-it-works",
-    span: true,
-    mini: (
-      <div>
-        <svg viewBox="0 0 200 40" className="w-full h-10 text-border-strong" aria-hidden>
-          <polyline
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            points="0,28 20,26 40,24 60,22 80,20 100,18 120,10 140,8 160,22 180,24 200,25"
-          />
-          <line x1="0" y1="12" x2="200" y2="12" stroke="currentColor" strokeDasharray="3 3" opacity="0.5" />
-          <rect x="118" y="6" width="6" height="6" fill="currentColor" className="text-foreground" />
-        </svg>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
-          Throttled +300% · 85ms backoff
-        </p>
-      </div>
-    ),
-  },
-];
+const MONO = "font-mono text-[11px] uppercase tracking-[0.08em]";
 
 export function SafetyModel() {
   return (
@@ -63,30 +11,193 @@ export function SafetyModel() {
         eyebrow="Safe by default"
         title={{ a: "Three gates before a single probe", b: "fires at your production." }}
       />
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
-        {GATES.map((g) => (
-          <Link
-            key={g.id}
-            href={g.href}
-            className={`group bg-background hover:bg-card p-6 transition-colors ${g.span ? "md:col-span-2" : ""}`}
-          >
-            <div className="mb-4">{g.mini}</div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
-              {g.id}
+
+      {/* Bento: lead tile spans two columns, the canary runs full width (spec §5.5). */}
+      <div className="mt-12 md:mt-16 hairline-grid grid-cols-1 md:grid-cols-3">
+        <GateTile
+          id="01"
+          title="Attestation gate"
+          body="A named engineer signs the scope before a single probe fires. Ticket and hash ride along with every run."
+          className="md:col-span-2"
+        >
+          <AttestationMini />
+        </GateTile>
+        <GateTile
+          id="02"
+          title="Boundary fence"
+          body="Third-party hosts are hard-blocked. Stripe, SendGrid and CDN origins never see a payload."
+        >
+          <FenceMini />
+        </GateTile>
+        <GateTile
+          id="03"
+          title="Adaptive canary"
+          body="A live latency probe watches the target. At +300% strain the pack throttles, then halts."
+          className="md:col-span-3"
+          wide
+        >
+          <CanaryMini />
+        </GateTile>
+      </div>
+
+      <BeforeWith />
+    </section>
+  );
+}
+
+function GateTile({
+  id,
+  title,
+  body,
+  children,
+  className,
+  wide,
+}: {
+  id: string;
+  title: string;
+  body: string;
+  children: React.ReactNode;
+  className?: string;
+  wide?: boolean;
+}) {
+  return (
+    <Link
+      href="/#how-it-works"
+      className={cn(
+        "group flex flex-col gap-6 p-5 md:p-6 transition-colors duration-150 hover:!bg-card",
+        wide && "md:grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-center md:gap-10",
+        className,
+      )}
+    >
+      <div className={cn("dot-grid border border-border p-4 h-[168px] flex flex-col justify-center", wide && "md:order-2 md:h-[184px]")}>
+        {children}
+      </div>
+      <div className={cn(wide && "md:order-1")}>
+        <p className={cn(MONO, "text-muted-foreground")}>{id}</p>
+        <h3 className="mt-2 text-[20px] leading-[1.3] font-medium tracking-[-0.01em]">{title}</h3>
+        <p className="mt-2 text-[15px] text-muted-foreground max-w-[48ch] text-pretty">{body}</p>
+        <span
+          className={cn(
+            MONO,
+            "mt-5 inline-flex h-8 items-center gap-2 px-3 border border-border bg-secondary transition-colors duration-150",
+            "group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary",
+          )}
+        >
+          View more <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function AttestationMini() {
+  const rows = [
+    ["Scope", "api.example.com/*"],
+    ["Signed by", "J. Doe · CTO"],
+    ["Ticket", "JIRA-SEC-214"],
+    ["Hash", "sha256:9f3a…c21e"],
+  ];
+  return (
+    <div aria-hidden className="bg-card border border-border-strong max-w-[420px] w-full">
+      <div className="flex items-center justify-between border-b border-border px-3 h-8">
+        <span className={cn(MONO, "text-[10px] text-muted-foreground")}>Attestation · #0214</span>
+        <span className={cn(MONO, "text-[10px] text-success flex items-center gap-1.5")}>
+          <span className="size-1.5 rounded-full bg-success" /> Signed
+        </span>
+      </div>
+      <dl className="grid grid-cols-[88px_1fr] gap-y-1.5 px-3 py-2.5 font-mono text-[11px]">
+        {rows.map(([k, v]) => (
+          <div key={k} className="contents">
+            <dt className="text-muted-foreground uppercase tracking-[0.08em] text-[10px] pt-px">{k}</dt>
+            <dd className="truncate">{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
+function FenceMini() {
+  const blocked = ["stripe.com", "sendgrid.net", "cdn.*"];
+  return (
+    <ul aria-hidden className="font-mono text-[11px] w-full">
+      <li className="flex justify-between items-center border border-border-strong bg-card px-2.5 h-7">
+        <span>api.example.com</span>
+        <span className="text-[10px] uppercase tracking-[0.08em] text-success">Allow</span>
+      </li>
+      {blocked.map((h) => (
+        <li key={h} className="flex justify-between items-center border-x border-b border-border bg-card px-2.5 h-7 text-muted-foreground">
+          <span className="line-through decoration-[1px]">{h}</span>
+          <span className="text-[10px] uppercase tracking-[0.08em] text-destructive">Blocked</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CanaryMini() {
+  // latency samples (ms); threshold at +300% of the 22ms baseline
+  const pts = [22, 23, 22, 24, 23, 25, 24, 27, 33, 48, 71, 88, 64, 41, 30, 26, 24, 23, 24, 22, 23, 22];
+  const W = 560;
+  const H = 120;
+  const max = 100;
+  const x = (i: number) => r2((i / (pts.length - 1)) * W);
+  const y = (v: number) => r2(H - 12 - (v / max) * (H - 24));
+  const path = pts.map((v, i) => `${i ? "L" : "M"}${x(i)} ${y(v)}`).join(" ");
+  const thresh = y(88);
+  const hit = 11;
+  return (
+    <div aria-hidden className="w-full">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[112px] text-foreground" fill="none" preserveAspectRatio="none">
+        {[0.25, 0.5, 0.75].map((f) => (
+          <line key={f} x1="0" x2={W} y1={r2(H * f)} y2={r2(H * f)} stroke="var(--border)" />
+        ))}
+        <line x1="0" x2={W} y1={thresh} y2={thresh} stroke="currentColor" strokeDasharray="4 4" opacity="0.5" />
+        <path d={path} stroke="currentColor" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+        <line x1={x(hit)} x2={x(hit)} y1="0" y2={H} stroke="currentColor" opacity="0.3" />
+      </svg>
+      <div className="mt-2 flex flex-wrap justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+        <span>Baseline 22ms</span>
+        <span className="text-foreground flex items-center gap-1.5">
+          <span className="size-1.5 bg-foreground" /> Throttled +300% · 85ms backoff
+        </span>
+        <span>Recovered</span>
+      </div>
+    </div>
+  );
+}
+
+/** "Before / with" strip — the old legacy-vs-MIAN section, merged here (task 001 §6). */
+function BeforeWith() {
+  const rows = [
+    ["Thread and DB exhaustion under blind payload bursts", "Sub-85ms adaptive backoff the moment the canary strains"],
+    ["Third-party spidering of Stripe, AWS and CDN origins", "Fenced hosts: third parties are hard-blocked"],
+    ["~40% false positives with no evidence attached", "Verified proofs with request trace and OAST callback"],
+  ];
+  return (
+    <div className="mt-6 border-x border-t border-border">
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="order-0 flex items-center gap-3 px-5 md:px-6 h-12 border-b border-border">
+          <span className={cn(MONO, "text-muted-foreground")}>Traditional scanners · outage risk</span>
+          <span className={cn(MONO, "text-sev-critical border border-sev-critical/30 px-1.5 py-0.5 text-[10px]")}>High</span>
+        </div>
+        <div className="order-2 md:order-none flex items-center gap-3 px-5 md:px-6 h-12 border-b border-border bg-card md:border-l">
+          <span className={cn(MONO, "text-muted-foreground")}>MIAN DAST · outage risk</span>
+          <span className={cn(MONO, "text-success border border-success/30 px-1.5 py-0.5 text-[10px]")}>Zero</span>
+        </div>
+        {rows.map(([before, after], i) => (
+          <div key={i} className="contents">
+            <p className="order-1 md:order-none px-5 md:px-6 py-4 text-[15px] text-muted-foreground border-b border-border flex gap-3">
+              <span aria-hidden className="font-mono text-subtle">—</span>
+              {before}
             </p>
-            <h3 className="mt-2 text-[20px] font-medium tracking-[-0.01em]">{g.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground max-w-[50ch]">{g.body}</p>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="mt-4 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary"
-              tabIndex={-1}
-            >
-              View more
-            </Button>
-          </Link>
+            <p className="order-3 md:order-none px-5 md:px-6 py-4 text-[15px] bg-card border-b border-border md:border-l flex gap-3">
+              <span aria-hidden className="font-mono">+</span>
+              {after}
+            </p>
+          </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

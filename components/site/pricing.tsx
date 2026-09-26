@@ -91,12 +91,12 @@ export function Pricing({ showCompareLink = true }: { showCompareLink?: boolean 
             <div
               key={plan.id}
               className={cn(
-                "snap-start shrink-0 w-[85%] md:w-auto border border-border p-5 flex flex-col",
+                "snap-start shrink-0 w-[85%] md:w-auto border border-border bg-background p-5 md:p-6 flex flex-col",
                 featured && "band-invert bg-background text-foreground lg:-translate-y-3 relative",
               )}
             >
               {featured ? (
-                <span className="absolute -top-3 left-4 font-mono text-[11px] uppercase tracking-[0.08em] bg-background px-2 border border-border">
+                <span className="absolute -top-2.5 left-4 font-mono text-[10px] uppercase tracking-[0.08em] bg-primary text-primary-foreground px-2 py-0.5">
                   Recommended
                 </span>
               ) : null}
@@ -125,15 +125,21 @@ export function Pricing({ showCompareLink = true }: { showCompareLink?: boolean 
                   </li>
                 ))}
               </ul>
-              <Button
-                variant={featured ? "primary" : "secondary"}
-                size="md"
-                className="mt-6 w-full"
-                disabled={busy === plan.id}
-                onClick={() => checkout(plan.id)}
-              >
-                {busy === plan.id ? "Working…" : featured ? "Start 14-day trial" : "Subscribe"}
-              </Button>
+              {plan.id === "enterprise" ? (
+                <Button variant="secondary" size="md" className="mt-6 w-full" asChild>
+                  <Link href="/demo">Talk to sales →</Link>
+                </Button>
+              ) : (
+                <Button
+                  variant={featured ? "primary" : "secondary"}
+                  size="md"
+                  className="mt-6 w-full"
+                  disabled={busy === plan.id}
+                  onClick={() => checkout(plan.id)}
+                >
+                  {busy === plan.id ? "Working…" : "Start 14-day trial"}
+                </Button>
+              )}
             </div>
           );
         })}

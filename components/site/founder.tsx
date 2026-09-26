@@ -1,48 +1,65 @@
+import Link from "next/link";
 import { Eyebrow, TwoTone } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export function Founder() {
   return (
     <section id="team" className="section container-rail">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        <div className="lg:col-span-5 bg-card border border-border p-6 md:p-8 flex flex-col">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="lg:col-span-5 bg-card border border-border p-6 md:p-10 flex flex-col">
           <Eyebrow>Founder</Eyebrow>
-          <TwoTone
-            a="Built to test production"
-            b="without collateral damage."
-            className="text-h2 mt-6"
-          />
-          <p className="mt-4 text-sm text-muted-foreground max-w-[50ch]">
-            Dave Mian designs MIAN DAST around attestation gates, boundary fences, and adaptive
-            canaries — so security teams can scan live systems without gambling uptime.
+          <TwoTone a="Built to test production" b="without collateral damage." className="text-h2 mt-6" />
+          <p className="mt-5 text-muted-foreground max-w-[46ch] text-pretty">
+            Dave Mian designs MIAN DAST around attestation gates, boundary fences and adaptive
+            canaries, so security teams can scan live systems without gambling uptime.
           </p>
+          <div aria-hidden className="flex-1 min-h-10" />
+          <dl className="grid grid-cols-2 border-t border-border">
+            <div className="pt-4 pr-4">
+              <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">Based in</dt>
+              <dd className="mt-1 font-mono text-[13px] uppercase tracking-[0.08em]">Abu Dhabi, UAE</dd>
+            </div>
+            <div className="pt-4 pl-4 border-l border-border">
+              <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">Role</dt>
+              <dd className="mt-1 font-mono text-[13px] uppercase tracking-[0.08em]">Principal architect</dd>
+            </div>
+          </dl>
           <Button variant="secondary" size="sm" className="mt-6 w-fit" asChild>
             <Link href="/about">About MIAN →</Link>
           </Button>
         </div>
-        <div className="lg:col-span-7 relative min-h-[280px]">
-          <div
-            className="absolute inset-0 bg-secondary border border-border grayscale contrast-[1.05]"
-            aria-hidden
-          >
-            <div className="h-full w-full flex items-center justify-center font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
-              Founder portrait · grayscale placeholder
-            </div>
-          </div>
-          <div className="bracket absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-card p-4">
-            <p className="font-mono text-[11px] uppercase tracking-[0.08em]">
-              Dave Mian · Founder & principal security architect
-            </p>
-            <p className="mt-1 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.08em]">
-              Abu Dhabi, UAE
-            </p>
-            <p className="mt-3 text-[20px] leading-snug tracking-[-0.01em]">
+
+        <div className="lg:col-span-7 relative min-h-[420px] lg:min-h-0 pb-24 sm:pb-0">
+          <PortraitSlot />
+          <figure className="bracket absolute bottom-0 sm:bottom-8 left-0 sm:left-8 right-0 sm:right-auto sm:max-w-[380px] bg-card border border-border p-5 md:p-6">
+            <blockquote className="text-[20px] leading-[1.35] tracking-[-0.01em] text-pretty">
               “If a scanner can take production down, it does not belong in production.”
-            </p>
-          </div>
+            </blockquote>
+            <figcaption className="mt-5 pt-4 border-t border-border flex items-center gap-3">
+              <span aria-hidden className="size-8 bg-secondary border border-border grid place-items-center font-mono text-[11px]">
+                DM
+              </span>
+              <span>
+                <span className="block font-mono text-[11px] uppercase tracking-[0.08em]">Dave Mian</span>
+                <span className="block font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
+                  Founder · MIAN DAST
+                </span>
+              </span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
+  );
+}
+
+/** Grayscale portrait goes here (spec §1: 0 radius, grayscale). Until then: a quiet framed slot. */
+function PortraitSlot() {
+  return (
+    <div aria-hidden className="absolute inset-0 dot-grid border border-border grayscale contrast-[1.05] overflow-hidden">
+      <span className="absolute top-4 right-4 bg-card border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+        Portrait · pending
+      </span>
+    </div>
   );
 }

@@ -5,7 +5,6 @@ import { LogosCompliance } from "@/components/site/logos-compliance";
 import { SafetyModel } from "@/components/site/safety-model";
 import { InstantAudit } from "@/components/site/instant-audit";
 import { HowItWorks } from "@/components/site/how-it-works";
-import { LegacyCompare } from "@/components/site/legacy-compare";
 import { Coverage } from "@/components/site/coverage";
 import { DeveloperFirst } from "@/components/site/developer-first";
 import { AuditReports } from "@/components/site/audit-reports";
@@ -27,7 +26,6 @@ export default function HomePage() {
         <SafetyModel />
         <InstantAudit />
         <HowItWorks />
-        <LegacyCompare />
         <Coverage />
         <DeveloperFirst />
         <AuditReports />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SectionHeader } from "@/components/site/primitives";
+import { BulletList, SectionHeader } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -48,34 +48,47 @@ export function DeveloperFirst() {
   const [copied, setCopied] = useState(false);
 
   async function copy() {
-    await navigator.clipboard.writeText(TABS[tab].code);
+    try {
+      await navigator.clipboard.writeText(TABS[tab].code);
+    } catch {
+      return;
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }
 
+  const lines = TABS[tab].code.split("\n");
+
   return (
     <section className="section container-rail">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+        <div className="lg:col-span-5 lg:pr-10">
           <SectionHeader
             eyebrow="Developer first"
             title={{ a: "Fail the build,", b: "not the database." }}
           />
-          <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
-            <li>· Block merges on critical findings</li>
-            <li>· SARIF into GitHub Security</li>
-            <li>· Safe mode default in CI</li>
-          </ul>
+          <BulletList
+            className="mt-8"
+            items={[
+              "Block merges on critical findings",
+              "SARIF straight into GitHub code scanning",
+              "Safe mode is the default in CI",
+            ]}
+          />
         </div>
-        <div className="lg:col-span-7 border border-code-border bg-code text-code-foreground">
-          <div className="flex items-center border-b border-code-border">
+        <div className="lg:col-span-7 bracket border border-code-border bg-code text-code-foreground min-w-0">
+          <div role="tablist" aria-label="Integration examples" className="flex items-center border-b border-code-border overflow-x-auto">
             {TABS.map((t, i) => (
               <button
                 key={t.id}
                 type="button"
+                role="tab"
+                aria-selected={i === tab}
                 className={cn(
-                  "px-3 py-2 font-mono text-[11px] uppercase tracking-[0.08em]",
-                  i === tab ? "text-code-foreground border-b border-code-foreground -mb-px" : "text-[#6e6e6e]",
+                  "px-4 h-11 shrink-0 font-mono text-[11px] uppercase tracking-[0.08em] border-b transition-colors",
+                  i === tab
+                    ? "text-code-foreground border-code-foreground"
+                    : "text-code-foreground/50 border-transparent hover:text-code-foreground/80",
                 )}
                 onClick={() => setTab(i)}
               >
@@ -85,14 +98,25 @@ export function DeveloperFirst() {
             <Button
               variant="ghost"
               size="sm"
-              className="ml-auto text-code-foreground hover:bg-[#1a1a1a]"
+              className="ml-auto mr-1 shrink-0 text-code-foreground/70 hover:text-code-foreground hover:bg-code-border"
               onClick={copy}
             >
               {copied ? "Copied ✓" : "Copy"}
             </Button>
           </div>
-          <pre className="p-4 overflow-x-auto text-[13px] leading-[1.6] font-mono text-[#a1a1a1] whitespace-pre-wrap">
-            {TABS[tab].code}
+          <pre className="py-4 overflow-x-auto text-[13px] leading-[1.7] font-mono min-h-[300px]">
+            <code className="grid grid-cols-[3rem_1fr]">
+              {lines.map((line, i) => (
+                <span key={i} className="contents">
+                  <span aria-hidden className="select-none text-right pr-4 text-code-foreground/30 nums">
+                    {i + 1}
+                  </span>
+                  <span className={cn("pr-4 whitespace-pre", line.trimStart().startsWith("#") ? "text-code-foreground/40" : "text-code-foreground/80")}>
+                    {line || " "}
+                  </span>
+                </span>
+              ))}
+            </code>
           </pre>
         </div>
       </div>

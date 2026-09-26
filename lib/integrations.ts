@@ -4,6 +4,7 @@
  */
 
 export type AuditResult = {
+  host: string;
   grade: string;
   score: number;
   checks: { name: string; value: string; pass: boolean }[];
@@ -24,6 +25,7 @@ export async function runQuickAudit(host: string): Promise<AuditResult> {
   if (!host.trim()) throw new Error("Enter a target domain.");
   const clean = host.replace(/^https?:\/\//, "").split("/")[0];
   return {
+    host: clean,
     grade: "A",
     score: 92,
     checks: [
@@ -32,7 +34,7 @@ export async function runQuickAudit(host: string): Promise<AuditResult> {
       { name: "CSP", value: "missing", pass: false },
       { name: "CORS", value: "same-origin", pass: true },
       { name: "Cookies", value: "Secure; HttpOnly", pass: true },
-    ].map((c) => ({ ...c, name: `${clean} · ${c.name}` })),
+    ],
   };
 }
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SectionHeader } from "@/components/site/primitives";
+import { SOURCED_STATS } from "@/lib/trust";
 
 const FAQS = [
   {
@@ -26,9 +27,22 @@ const FAQS = [
   },
   {
     q: "What does the free audit check?",
-    a: "A passive pass over TLS, security headers, CORS, and cookies. Nothing is fuzzed. Results are SAMPLE until you wire runQuickAudit() to your edge.",
+    a: "A passive pass over TLS, security headers, CORS and cookies, the same things a browser sees. Nothing is fuzzed and nothing is stored beyond the report you choose to download.",
   },
 ];
+
+// Target of the hero stat footnotes (spec §5.2); only rendered once a stat carries a source.
+const METHODOLOGY = SOURCED_STATS.length
+  ? [
+      {
+        id: "methodology",
+        q: "Where do these numbers come from?",
+        a: SOURCED_STATS.map((s) => `${s.value} ${s.label.toLowerCase()}: ${s.source}.`).join(" "),
+      },
+    ]
+  : [];
+
+const ITEMS: { q: string; a: string; id?: string }[] = [...FAQS, ...METHODOLOGY];
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
@@ -40,27 +54,30 @@ export function Faq() {
           <SectionHeader eyebrow="FAQ" title={{ a: "Straight answers", b: "before you scan." }} />
         </div>
         <div className="lg:col-span-8">
-          {FAQS.map((f, i) => {
+          {ITEMS.map((f, i) => {
             const isOpen = open === i;
             return (
               <details
                 key={f.q}
+                id={f.id}
                 open={isOpen}
-                className="border-b border-border py-4 group"
+                className="border-b border-border first:border-t group scroll-mt-28"
                 onToggle={(e) => {
                   const el = e.currentTarget;
                   if (el.open) setOpen(i);
                   else if (open === i) setOpen(null);
                 }}
               >
-                <summary className="flex items-start gap-3 cursor-pointer list-none">
-                  <span className="font-mono text-[11px] text-muted-foreground pt-1">
+                <summary className="flex items-baseline gap-5 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:text-foreground">
+                  <span className="font-mono text-[11px] text-muted-foreground nums w-5 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="flex-1 text-[20px] font-medium tracking-[-0.01em]">{f.q}</span>
-                  <span className="font-mono text-lg leading-none">{isOpen ? "−" : "+"}</span>
+                  <span className="flex-1 text-[20px] leading-[1.3] tracking-[-0.01em] text-pretty">{f.q}</span>
+                  <span aria-hidden className="font-mono text-[18px] leading-none w-4 text-center text-muted-foreground group-hover:text-foreground">
+                    {isOpen ? "−" : "+"}
+                  </span>
                 </summary>
-                <p className="mt-3 pl-8 text-[16px] text-muted-foreground max-w-[60ch] text-pretty">
+                <p className="-mt-1 pb-6 pl-10 pr-9 text-[16px] text-muted-foreground max-w-[64ch] text-pretty">
                   {f.a}
                 </p>
               </details>

@@ -48,6 +48,20 @@ export function SectionHeader({
   );
 }
 
+/** Mono-square bullet list used beside section headings. */
+export function BulletList({ items, className }: { items: string[]; className?: string }) {
+  return (
+    <ul className={cn("space-y-3 text-[15px]", className)}>
+      {items.map((item) => (
+        <li key={item} className="flex gap-3 text-muted-foreground">
+          <span aria-hidden className="mt-[9px] size-1.5 shrink-0 bg-foreground" />
+          <span className="text-pretty">{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function BracketFrame({
   children,
   className,
@@ -58,10 +72,7 @@ export function BracketFrame({
   fill?: boolean;
 }) {
   return (
-    <div
-      className={cn("bracket p-4 md:p-6", fill && "bg-card", className)}
-      style={fill ? undefined : undefined}
-    >
+    <div className={cn("bracket p-4 md:p-6", fill && "bg-card", className)}>
       {children}
     </div>
   );

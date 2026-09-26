@@ -54,6 +54,9 @@
   --code: #0a0a0a;
   --code-foreground: #ededed;
   --code-border: #1f1f1f;
+
+  /* ink band ground, used where a band starts part-way through a section */
+  --ink: #0a0a0a;
 }
 
 @media (min-width: 768px) {
@@ -96,6 +99,8 @@
 
   --glow: radial-gradient(60% 60% at 50% 40%, rgb(255 255 255 / 0.08), transparent 70%);
 }
+
+.dark { --ink: #111111; }
 
 .dark .band-invert {
   --background: #111111;
@@ -196,7 +201,8 @@
     font-family: var(--font-mono); font-size: 11px; line-height: 1.2;
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground);
   }
-  .eyebrow::before { content: ""; width: 6px; height: 6px; background: var(--foreground); }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; background: var(--foreground); flex: none; }
+  .eyebrow { width: fit-content; }
 
   .two-tone > .tone-2 { color: var(--subtle); }
 
@@ -222,6 +228,46 @@
   }
   .nums { font-variant-numeric: tabular-nums; }
 
+  /* Shared-border cell grid (spec §7 HairlineGrid): 1px gaps show the border colour. */
+  .hairline-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .hairline-grid > * { background: var(--background); }
+
+  /* Instrument well behind mini-UIs: a quiet dot grid, never a hue. */
+  .dot-grid {
+    background-color: var(--card);
+    background-image: radial-gradient(var(--border-strong) 0.8px, transparent 0.8px);
+    background-size: 12px 12px;
+  }
+
+  /* Seam where a light section hands over to an ink band part-way down (spec §5.3). */
+  .band-seam {
+    background: linear-gradient(to bottom, var(--background) 0 var(--seam, 120px), var(--ink) var(--seam, 120px));
+  }
+
+  /* Printed-paper surface: always the light set, even in dark mode (spec §5.11). */
+  .paper {
+    --background: #ffffff; --foreground: #0a0a0a; --card: #fafafa; --muted-foreground: #666666;
+    --subtle: #858585; --border: #e6e6e6; --border-strong: #d4d4d4; --secondary: #f0f0f0;
+    --sev-critical: #dc2626; --sev-high: #c2410c; --sev-medium: #a16207; --sev-low: #666666;
+    --success: #15803d;
+    background: var(--background); color: var(--foreground);
+  }
+
+  /* DocCard folded corner (spec §5.12). */
+  .fold { position: relative; }
+  .fold::after {
+    content: ""; position: absolute; top: -1px; right: -1px; width: 17px; height: 17px; pointer-events: none;
+    background: linear-gradient(
+      to bottom left,
+      var(--page, var(--background)) 50%,
+      var(--border-strong) 50%, var(--border-strong) calc(50% + 1px),
+      var(--secondary) calc(50% + 1px)
+    );
+  }
+
+  .spin-slow { transform-box: view-box; transform-origin: center; animation: spin 60s linear infinite; }
+  .spin-slow-rev { transform-box: view-box; transform-origin: center; animation: spin 90s linear infinite reverse; }
+
   .text-display {
     font-size: var(--text-display);
     line-height: var(--text-display--line-height);
@@ -246,7 +292,14 @@
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 @keyframes fill {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
