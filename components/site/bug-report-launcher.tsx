@@ -74,8 +74,7 @@ export function BugReportLauncher() {
           >
             <header className="flex items-center gap-2 border-b border-border px-3 py-2.5 bg-secondary/60">
               <span className="relative shrink-0 overflow-hidden">
-                <BrandLogo linked={false} className="!h-5" />
-                {!reduce ? <span className="logo-shine" aria-hidden /> : null}
+                <BrandLogo linked={false} shine className="!h-5" />
               </span>
               <p id={titleId} className="sr-only">
                 Report a bug
@@ -144,8 +143,7 @@ export function BugReportLauncher() {
           />
         ) : null}
         <span className="relative shrink-0 overflow-hidden">
-          <BrandLogo linked={false} className="!h-6" />
-          {!reduce ? <span className="logo-shine" aria-hidden /> : null}
+          <BrandLogo linked={false} shine className="!h-6" />
         </span>
       </motion.button>
     </div>

@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { BrandLogo } from "@/components/site/brand-logo";
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/components/motion";
 
 /**
- * Customer-app mock: logo-only badge. Hover enlarges the mark; click opens the short embed form.
+ * Customer-app mock: logo badge. Hover enlarges the full mark; click opens the short embed form.
  */
 export function EmbedHostPreview({
   src = "/embed/report",
@@ -17,7 +16,6 @@ export function EmbedHostPreview({
   className?: string;
   height?: number;
 }) {
-  const reduce = useReducedMotion();
   const [hover, setHover] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -73,9 +71,8 @@ export function EmbedHostPreview({
             )}
             aria-hidden
           >
-            <div className="relative flex h-12 items-center justify-center px-3 border border-[#2e2e2e] bg-[#0a0a0a] shadow-[0_12px_32px_rgb(0_0_0/0.4)]">
-              <BrandLogo linked={false} className="!h-7" />
-              {!reduce ? <span className="logo-shine" /> : null}
+            <div className="relative grid h-14 w-[min(72vw,220px)] place-items-center border border-[#2e2e2e] bg-[#0a0a0a] px-4 shadow-[0_12px_32px_rgb(0_0_0/0.4)]">
+              <BrandLogo linked={false} shine className="!h-7" />
             </div>
           </div>
 
@@ -97,6 +94,7 @@ export function EmbedHostPreview({
           >
             <BrandLogo
               linked={false}
+              shine
               className="!h-5 transition-transform duration-150 group-hover:scale-[1.04]"
             />
           </button>

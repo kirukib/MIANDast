@@ -25,6 +25,7 @@ export function BrandLogo({
   priority,
   linked = true,
   variant = "full",
+  shine = false,
 }: {
   className?: string;
   href?: string;
@@ -34,6 +35,8 @@ export function BrandLogo({
   linked?: boolean;
   /** `mark` = MIAN icon only, no wordmark text. */
   variant?: "full" | "mark";
+  /** Sweeping highlight over the mark (nav / footer / floating bubbles). */
+  shine?: boolean;
 }) {
   const size = priority === "footer" ? "h-9 md:h-11" : "h-7";
   const isMark = variant === "mark";
@@ -73,7 +76,7 @@ export function BrandLogo({
           />
           <svg
             viewBox="0 0 1112 278"
-            className="relative h-full w-auto block"
+            className="relative h-full w-full block"
             xmlns="http://www.w3.org/2000/svg"
             role={linked ? undefined : "img"}
             aria-label={linked ? undefined : "MIAN DAST"}
@@ -85,6 +88,7 @@ export function BrandLogo({
           </svg>
         </>
       )}
+      {shine ? <span className="logo-shine" aria-hidden /> : null}
     </span>
   );
 

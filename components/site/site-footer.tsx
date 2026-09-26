@@ -25,7 +25,7 @@ export function SiteFooter() {
 
       <div className="container-rail pb-8">
         <div className="pt-12 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          <BrandLogo priority="footer" />
+          <BrandLogo priority="footer" shine />
           <nav aria-label="Footer" className="grid grid-cols-2 gap-y-4 gap-x-6 md:flex md:justify-end md:gap-10">
             {FOOTER_LINKS.map((l) => (
               <Link

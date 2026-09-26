@@ -92,7 +92,7 @@ export function SiteNav() {
             if (openDropdown) scheduleClose(openDropdown);
           }}
         >
-          <BrandLogo />
+          <BrandLogo shine />
 
           <ul className="hidden md:flex flex-1 items-center justify-center gap-0.5">
             {MEGA_TRIGGERS.map((item) => {
@@ -187,7 +187,7 @@ export function SiteNav() {
             transition={transitions.base}
           >
             <div className="flex justify-between items-center gap-3">
-              <BrandLogo href="/" />
+              <BrandLogo href="/" shine />
               <button type="button" className="label-mono" onClick={() => setOpen(false)}>
                 Close
               </button>
