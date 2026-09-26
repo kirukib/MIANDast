@@ -32,11 +32,18 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
+.vercel/
+
+# local agent / IDE
+.cursor/
+.claude/
+*.Zone.Identifier
+*Zone.Identifier
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-*.Zone.Identifier

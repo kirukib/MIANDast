@@ -16,8 +16,8 @@ export default function TeamPage() {
       ]}
       rows={[
         {
-          name: "Dave Mian",
-          email: "dave@askmian.com",
+          name: "Alex Owner",
+          email: "owner@sample.local",
           role: "Owner",
           status: "Active",
         },
