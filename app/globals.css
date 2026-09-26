@@ -281,6 +281,149 @@
 
   .spin-slow { transform-box: view-box; transform-origin: center; animation: spin 60s linear infinite; }
   .spin-slow-rev { transform-box: view-box; transform-origin: center; animation: spin 90s linear infinite reverse; }
+  .spin-hero {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: spin 28s linear infinite;
+  }
+  .spin-hero-rev {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: spin 40s linear infinite reverse;
+  }
+  .hero-scope.is-hot .spin-hero { animation-duration: 14s; }
+  .hero-scope.is-hot .spin-hero-rev { animation-duration: 18s; }
+
+  /* Hero scope fence — live color + motion */
+  @keyframes hero-fence-dash {
+    to { stroke-dashoffset: -24; }
+  }
+  @keyframes hero-probe-pulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+  }
+  @keyframes hero-halo {
+    0%, 100% { opacity: 0.08; transform: scale(0.7); }
+    50% { opacity: 0.28; transform: scale(1.15); }
+  }
+  @keyframes hero-led {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  @keyframes hero-line-scan {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.85; }
+  }
+  @keyframes hero-wash {
+    0%, 100% { opacity: 0.04; }
+    50% { opacity: 0.09; }
+  }
+  @keyframes hero-block-flash {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  @keyframes hero-draw {
+    from { stroke-dashoffset: 1; opacity: 0.4; }
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+
+  .hero-scope .hero-scope-wash {
+    color: var(--success);
+  }
+  .hero-scope.is-live .hero-scope-wash {
+    animation: hero-wash 3.6s ease-in-out infinite;
+  }
+  .hero-scope.is-hot .hero-scope-wash {
+    animation-duration: 1.8s;
+    opacity: 0.12;
+  }
+
+  .hero-scope.is-live .hero-fence {
+    stroke: color-mix(in srgb, var(--success) 70%, var(--foreground));
+    stroke-dasharray: 5 5;
+    animation: hero-draw 1.2s var(--ease-out) both, hero-fence-dash 2.8s linear infinite;
+    animation-delay: 0ms, 1.2s;
+  }
+  .hero-scope.is-hot .hero-fence {
+    stroke: var(--success);
+    filter: drop-shadow(0 0 3px color-mix(in srgb, var(--success) 40%, transparent));
+    animation-duration: 1.2s, 1.4s;
+  }
+
+  .hero-scope.is-live .hero-orbit {
+    color: var(--success);
+  }
+  .hero-scope.is-live .hero-orbit ellipse {
+    stroke: color-mix(in srgb, var(--success) 55%, var(--foreground));
+  }
+  .hero-scope.is-live .hero-probe rect {
+    fill: var(--success);
+    animation: hero-probe-pulse 2s ease-in-out infinite;
+    animation-delay: calc(var(--ft-i, 0) * 0.35s);
+  }
+  .hero-scope.is-live .hero-probe-halo {
+    fill: var(--success);
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: hero-halo 2s ease-in-out infinite;
+    animation-delay: calc(var(--ft-i, 0) * 0.35s);
+  }
+  .hero-scope.is-hot .hero-probe rect,
+  .hero-scope.is-hot .hero-probe-halo {
+    animation-duration: 1s;
+  }
+
+  .hero-scope.is-live .hero-target-led {
+    fill: var(--success);
+    animation: hero-led 1.6s ease-in-out infinite;
+  }
+  .hero-scope.is-live .hero-target-line {
+    stroke: color-mix(in srgb, var(--success) 50%, currentColor);
+    animation: hero-line-scan 2.4s ease-in-out infinite;
+    animation-delay: calc(var(--ft-i, 0) * 0.25s);
+  }
+  .hero-scope.is-hot .hero-target rect:first-of-type {
+    stroke: color-mix(in srgb, var(--success) 65%, var(--foreground));
+  }
+
+  .hero-scope.is-live .hero-blocked {
+    color: var(--sev-critical);
+  }
+  .hero-scope.is-live .hero-blocked rect,
+  .hero-scope.is-live .hero-blocked path {
+    stroke: color-mix(in srgb, var(--sev-critical) 75%, currentColor);
+  }
+  .hero-scope.is-live .hero-blocked text {
+    fill: var(--sev-high);
+  }
+  .hero-scope.is-live .hero-block-x {
+    stroke: var(--sev-critical);
+  }
+  .hero-scope.is-hot .hero-block-x {
+    animation: hero-block-flash 0.8s ease-in-out infinite;
+  }
+  .hero-scope.is-live .hero-block-link {
+    stroke: color-mix(in srgb, var(--sev-critical) 55%, transparent);
+  }
+
+  .hero-scope.is-live .hero-dim-label {
+    fill: color-mix(in srgb, var(--success) 70%, var(--muted-foreground));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin-hero,
+    .spin-hero-rev,
+    .hero-scope .hero-fence,
+    .hero-scope .hero-probe rect,
+    .hero-scope .hero-probe-halo,
+    .hero-scope .hero-target-led,
+    .hero-scope .hero-target-line,
+    .hero-scope .hero-block-x,
+    .hero-scope .hero-scope-wash {
+      animation: none !important;
+      filter: none !important;
+    }
+  }
 
   .text-display {
     font-size: var(--text-display);
