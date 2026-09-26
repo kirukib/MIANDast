@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { BrandLogo } from "@/components/site/brand-logo";
 import { Button } from "@/components/ui/button";
 
 const FOOTER_LINKS = [
@@ -22,17 +23,20 @@ export function SiteFooter() {
       </div>
 
       <div className="container-rail pb-8">
-        <nav aria-label="Footer" className="pt-12 grid grid-cols-2 gap-y-4 md:flex md:justify-between">
-          {FOOTER_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className="font-mono text-[13px] uppercase tracking-[0.08em] hover:underline underline-offset-4 decoration-1 w-fit"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="pt-12 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <BrandLogo priority="footer" />
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-y-4 gap-x-6 md:flex md:justify-end md:gap-10">
+            {FOOTER_LINKS.map((l) => (
+              <Link
+                key={l.label}
+                href={l.href}
+                className="font-mono text-[13px] uppercase tracking-[0.08em] hover:underline underline-offset-4 decoration-1 w-fit"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         <div className="mt-16 md:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-end">
           <p className="lg:col-span-6 text-statement">

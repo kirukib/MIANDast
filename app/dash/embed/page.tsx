@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { ConsoleShell } from "@/components/dash/console-shell";
+import { EmbedHostPreview } from "@/components/dash/embed-host-preview";
 import { Button } from "@/components/ui/button";
 
 export default function EmbedGuidePage() {
@@ -11,12 +12,15 @@ export default function EmbedGuidePage() {
   const origin = typeof window !== "undefined" ? window.location.origin : "https://your-domain";
 
   const snippet = useMemo(
-    () => `<iframe
-  src="${origin}/embed/report"
-  title="MIAN DAST report"
-  style="width:100%;height:640px;border:1px solid #1f1f1f;background:#0a0a0a"
-  allow="clipboard-write"
-></iframe>
+    () => `<!-- Floating badge + expand-on-hover panel (host styles yours) -->
+<div id="mian-dast-host" style="position:fixed;bottom:16px;right:16px;z-index:9999">
+  <iframe
+    src="${origin}/embed/report"
+    title="MIAN DAST report"
+    style="width:360px;height:520px;border:1px solid #1f1f1f;background:#0a0a0a;border-radius:2px"
+    allow="clipboard-write"
+  ></iframe>
+</div>
 
 <script>
   window.addEventListener("message", (e) => {
@@ -39,9 +43,9 @@ export default function EmbedGuidePage() {
     <ConsoleShell crumb="Dash / Embed" pathname={pathname}>
       <h1 className="text-2xl font-normal tracking-[-0.02em]">Embed iframe</h1>
       <p className="mt-2 text-sm text-[#a1a1a1] max-w-[60ch]">
-        Drop this iframe on any host page. When a report is submitted inside the embed, it upserts
-        into the dash store (same origin) and{" "}
-        <code className="font-mono text-xs">postMessage</code>s the parent for cross-origin wiring.
+        Drop this iframe on any host page. Hover the corner badge in the preview to see the same
+        expand panel customers get — logo mark included. Submits upsert into the dash store and{" "}
+        <code className="font-mono text-xs">postMessage</code> the parent for cross-origin wiring.
       </p>
 
       <div className="mt-6 border border-code-border bg-[#0a0a0a]">
@@ -63,8 +67,8 @@ export default function EmbedGuidePage() {
         </pre>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="border border-code-border p-4 text-sm text-[#a1a1a1] space-y-2">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="lg:col-span-2 border border-code-border p-4 text-sm text-[#a1a1a1] space-y-2">
           <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-code-foreground">
             Message contract
           </p>
@@ -79,16 +83,19 @@ export default function EmbedGuidePage() {
             <code className="font-mono text-xs text-code-foreground">type: &quot;report:delete&quot;</code>{" "}
             + <code className="font-mono text-xs">id</code>
           </p>
-        </div>
-        <div className="border border-code-border p-4 text-sm text-[#a1a1a1] space-y-2">
-          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-code-foreground">
-            Live preview
+          <p className="pt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-code-foreground">
+            Host UX
           </p>
-          <iframe
-            title="Embed preview"
-            src="/embed/report"
-            className="w-full h-[280px] border border-code-border bg-[#111]"
-          />
+          <p className="text-sm">
+            Corner badge with the MIAN logo → hover / focus expands the report iframe. Click the
+            badge to pin it open.
+          </p>
+        </div>
+        <div className="lg:col-span-3 space-y-2">
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1a1]">
+            Live host preview · hover the badge
+          </p>
+          <EmbedHostPreview height={360} />
         </div>
       </div>
     </ConsoleShell>

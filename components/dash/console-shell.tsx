@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { BrandLogo } from "@/components/site/brand-logo";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -91,12 +92,7 @@ export function ConsoleShell({
   return (
     <div className="dark min-h-svh bg-code text-code-foreground flex">
       <aside className="hidden lg:flex w-60 shrink-0 flex-col border-r border-code-border p-4">
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em]"
-        >
-          <span className="size-3 bg-code-foreground" /> MIAN DAST
-        </Link>
+        <BrandLogo href="/" className="!h-6 mb-2" />
         <nav className="flex-1 overflow-y-auto pb-4" aria-label="Admin">
           {NAV.map((g) => (
             <div key={g.group} className="mt-6">

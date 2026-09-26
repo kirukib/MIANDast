@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ConsoleShell } from "@/components/dash/console-shell";
+import { EmbedHostPreview } from "@/components/dash/embed-host-preview";
 import { Button } from "@/components/ui/button";
 import {
   archiveReport,
@@ -112,14 +113,13 @@ export default function ReportDetailPage() {
         <Row label="Notes" value={report.notes ?? "—"} />
       </div>
 
-      <div className="mt-8 border border-code-border p-4">
+      <div className="mt-8 space-y-2">
         <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1a1]">
-          Preview iframe
+          Host preview · hover the badge
         </p>
-        <iframe
-          title="Report embed preview"
+        <EmbedHostPreview
           src={`/embed/report?id=${encodeURIComponent(report.id)}&preview=1`}
-          className="mt-3 w-full h-[420px] border border-code-border bg-[#111]"
+          height={380}
         />
       </div>
 

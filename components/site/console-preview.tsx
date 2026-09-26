@@ -1,4 +1,5 @@
 import { r2 } from "@/lib/utils";
+import { BrandLogo } from "@/components/site/brand-logo";
 
 const FINDINGS = [
   { id: "F-2141", title: "BOLA on /orders/{id}", sev: "High", target: "api.sample", state: "Proven" },
@@ -71,9 +72,7 @@ function Sidebar() {
   ];
   return (
     <aside className="hidden md:block border-r border-border p-4">
-      <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em]">
-        <span className="size-3 bg-foreground" /> MIAN DAST
-      </div>
+      <BrandLogo linked={false} className="!h-5" />
       {groups.map((g) => (
         <div key={g.label} className="mt-6">
           <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">

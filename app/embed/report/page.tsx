@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { BrandLogo } from "@/components/site/brand-logo";
 import { Button } from "@/components/ui/button";
 import {
   createReportFromEmbed,
@@ -57,19 +58,24 @@ function EmbedInner() {
   const view = created ?? existing;
 
   return (
-    <div className="min-h-svh bg-[#0a0a0a] text-[#ededed] p-4 md:p-6 font-sans">
-      <header className="flex items-center gap-2 border-b border-[#1f1f1f] pb-3">
-        <span className="size-3 bg-[#ededed]" aria-hidden />
-        <span className="font-mono text-[11px] uppercase tracking-[0.08em]">
-          MIAN DAST · Report embed
+    <div className="dark min-h-svh bg-[#0a0a0a] text-[#ededed] p-4 md:p-5 font-sans">
+      <header className="flex items-center gap-3 border-b border-[#1f1f1f] pb-3">
+        <BrandLogo linked={false} className="!h-6" />
+        <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1a1]">
+          Report embed
         </span>
         {isPreview ? (
-          <span className="ml-auto font-mono text-[11px] uppercase text-[#a1a1a1]">Preview</span>
-        ) : null}
+          <span className="ml-auto font-mono text-[11px] uppercase text-[#6e6e6e]">Preview</span>
+        ) : (
+          <span className="ml-auto flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-[#22c55e]">
+            <span className="size-1.5 rounded-full bg-[#22c55e]" aria-hidden />
+            Live
+          </span>
+        )}
       </header>
 
       {view ? (
-        <div className="mt-6 space-y-4">
+        <div className="mt-5 space-y-4">
           <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#22c55e]">
             {created ? "Report filed → dash" : "Loaded report"}
           </p>
@@ -98,7 +104,7 @@ function EmbedInner() {
           ) : null}
         </div>
       ) : (
-        <form onSubmit={submit} className="mt-6 space-y-4 max-w-md">
+        <form onSubmit={submit} className="mt-5 space-y-4 max-w-md">
           <p className="text-sm text-[#a1a1a1]">
             Generate a SAMPLE report. It appears instantly in{" "}
             <span className="text-[#ededed]">/dash</span>.
@@ -175,7 +181,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Item({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-[#1f1f1f] p-3">
+    <div className="border border-[#1f1f1f] p-3 transition-colors duration-150 hover:border-[#2e2e2e] hover:bg-[#111]">
       <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1a1]">{label}</dt>
       <dd className="mt-1 font-mono text-xs break-all">{value}</dd>
     </div>

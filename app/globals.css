@@ -29,6 +29,12 @@
   --input: #d4d4d4;
   --ring: #0a0a0a;
 
+  /* Brand logo (Logo.svg) — light: charcoal MIAN mark, black→#666 plate, white DAST */
+  --logo-mark: #363636;
+  --logo-from: #000000;
+  --logo-to: #666666;
+  --logo-text: #ffffff;
+
   --destructive: #dc2626;
   --sev-critical: #dc2626;
   --sev-high: #c2410c;
@@ -89,6 +95,12 @@
   --border-strong: #2e2e2e;
   --input: #2e2e2e;
   --ring: #ededed;
+
+  /* Brand logo — dark: light MIAN mark, light→#666 plate, ink DAST (keeps conic) */
+  --logo-mark: #c8c8c8;
+  --logo-from: #ededed;
+  --logo-to: #666666;
+  --logo-text: #0a0a0a;
 
   --destructive: #ef4444;
   --sev-critical: #ef4444;
@@ -335,6 +347,52 @@
 @keyframes pulse-dot {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
   50% { box-shadow: 0 0 0 4px transparent; }
+}
+
+/* Floating bug-report launcher: logo shimmer + soft ping */
+@keyframes logo-shine {
+  0% { transform: translateX(-120%) skewX(-18deg); }
+  55%, 100% { transform: translateX(220%) skewX(-18deg); }
+}
+@keyframes bug-ping {
+  0% { opacity: 0.55; transform: scale(1); }
+  70%, 100% { opacity: 0; transform: scale(1.18); }
+}
+.logo-shine {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.logo-shine::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.55) 48%,
+    transparent 100%
+  );
+  animation: logo-shine 2.8s var(--ease-out) infinite;
+}
+.dark .logo-shine::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(10 10 10 / 0.35) 48%,
+    transparent 100%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-shine::after,
+  .animate-\[bug-ping_2\.4s_ease-out_infinite\] {
+    animation: none !important;
+  }
 }
 
 /* Staggered entrance inside a component: set --d for the delay. */
