@@ -73,8 +73,8 @@ export function BugReportLauncher() {
             transition={transitions.base}
           >
             <header className="flex items-center gap-2 border-b border-border px-3 py-2.5 bg-secondary/60">
-              <span className="relative shrink-0">
-                <BrandLogo linked={false} variant="mark" className="!h-6" />
+              <span className="relative shrink-0 overflow-hidden">
+                <BrandLogo linked={false} className="!h-5" />
                 {!reduce ? <span className="logo-shine" aria-hidden /> : null}
               </span>
               <p id={titleId} className="sr-only">
@@ -127,14 +127,14 @@ export function BugReportLauncher() {
         aria-expanded={open}
         aria-label={open ? "Close bug report" : "Open bug report"}
         className={cn(
-          "pointer-events-auto relative size-12 flex items-center justify-center border border-border-strong bg-card",
+          "pointer-events-auto relative h-11 px-2.5 flex items-center justify-center border border-border-strong bg-card",
           "shadow-[0_8px_24px_rgb(0_0_0/0.08)] dark:shadow-[0_8px_24px_rgb(0_0_0/0.4)]",
           "transition-[border-color,transform] duration-150 ease-[var(--ease-out)]",
           "hover:border-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           open && "border-foreground",
         )}
         onClick={() => setOpen((v) => !v)}
-        whileHover={reduce ? undefined : { y: -1, scale: 1.06 }}
+        whileHover={reduce ? undefined : { y: -1, scale: 1.03 }}
         whileTap={reduce ? undefined : { scale: 0.98 }}
       >
         {!reduce && !open ? (
@@ -143,8 +143,8 @@ export function BugReportLauncher() {
             className="absolute inset-0 border border-foreground/25 animate-[bug-ping_2.4s_ease-out_infinite]"
           />
         ) : null}
-        <span className="relative shrink-0 overflow-hidden rounded-[3px]">
-          <BrandLogo linked={false} variant="mark" className="!h-7" />
+        <span className="relative shrink-0 overflow-hidden">
+          <BrandLogo linked={false} className="!h-6" />
           {!reduce ? <span className="logo-shine" aria-hidden /> : null}
         </span>
       </motion.button>

@@ -62,7 +62,7 @@ export function EmbedHostPreview({
             </div>
           ) : null}
 
-          {/* Hover: larger logo only — no wordmark / labels */}
+          {/* Hover: larger full logo with DAST wordmark */}
           <div
             className={cn(
               "pointer-events-none absolute bottom-full right-0 mb-2",
@@ -73,8 +73,8 @@ export function EmbedHostPreview({
             )}
             aria-hidden
           >
-            <div className="relative flex size-16 items-center justify-center border border-[#2e2e2e] bg-[#0a0a0a] shadow-[0_12px_32px_rgb(0_0_0/0.4)]">
-              <BrandLogo linked={false} variant="mark" className="!h-10" />
+            <div className="relative flex h-12 items-center justify-center px-3 border border-[#2e2e2e] bg-[#0a0a0a] shadow-[0_12px_32px_rgb(0_0_0/0.4)]">
+              <BrandLogo linked={false} className="!h-7" />
               {!reduce ? <span className="logo-shine" /> : null}
             </div>
           </div>
@@ -89,7 +89,7 @@ export function EmbedHostPreview({
             onBlur={() => setHover(false)}
             onClick={() => setOpen((v) => !v)}
             className={cn(
-              "group relative size-11 flex items-center justify-center border border-[#2e2e2e] bg-[#0a0a0a]",
+              "group relative h-10 px-2.5 flex items-center justify-center border border-[#2e2e2e] bg-[#0a0a0a]",
               "transition-[border-color,transform] duration-150 ease-[var(--ease-out)]",
               "hover:border-[#ededed] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ededed]",
               (open || hover) && "border-[#ededed]",
@@ -97,8 +97,7 @@ export function EmbedHostPreview({
           >
             <BrandLogo
               linked={false}
-              variant="mark"
-              className="!h-7 transition-transform duration-150 group-hover:scale-[1.04]"
+              className="!h-5 transition-transform duration-150 group-hover:scale-[1.04]"
             />
           </button>
         </div>

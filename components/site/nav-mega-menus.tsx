@@ -82,7 +82,7 @@ function FeaturedCard({
       <h3 className="mt-3 text-[18px] leading-snug tracking-[-0.01em]">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground text-pretty">{body}</p>
       <div className="flex flex-1 items-center justify-center py-6">
-        <BrandLogo linked={false} variant="mark" className="!h-10" />
+        <BrandLogo linked={false} className="!h-8" />
       </div>
       <Link
         href={href}

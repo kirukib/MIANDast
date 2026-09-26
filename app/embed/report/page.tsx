@@ -59,7 +59,7 @@ function EmbedInner() {
   return (
     <div className="dark min-h-0 bg-[#0a0a0a] text-[#ededed] p-3 font-sans">
       <header className="flex items-center gap-2 border-b border-[#1f1f1f] pb-2">
-        <BrandLogo linked={false} variant="mark" className="!h-6" />
+        <BrandLogo linked={false} className="!h-5" />
         {isPreview ? (
           <span className="ml-auto font-mono text-[10px] uppercase text-[#6e6e6e]">Preview</span>
         ) : (
