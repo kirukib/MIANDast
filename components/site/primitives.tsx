@@ -5,14 +5,16 @@ export function TwoTone({
   b,
   as: Tag = "h2",
   className,
+  style,
 }: {
   a: string;
   b: string;
   as?: "h1" | "h2" | "h3" | "p";
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <Tag className={cn("two-tone text-balance max-w-[22ch]", className)}>
+    <Tag className={cn("two-tone text-balance max-w-[22ch]", className)} style={style}>
       {a} <span className="tone-2">{b}</span>
     </Tag>
   );
@@ -36,7 +38,7 @@ export function SectionHeader({
   centered?: boolean;
 }) {
   return (
-    <div className={cn(centered && "text-center mx-auto", className)}>
+    <div data-reveal className={cn(centered && "text-center mx-auto", className)}>
       <Eyebrow>{eyebrow}</Eyebrow>
       <TwoTone a={title.a} b={title.b} className="text-h2 mt-6" />
       {sub ? (

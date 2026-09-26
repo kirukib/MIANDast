@@ -82,7 +82,7 @@ export function Pricing({ showCompareLink = true }: { showCompareLink?: boolean 
         supported
       </div>
 
-      <div className="mt-8 flex md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 overflow-x-auto snap-x md:overflow-visible">
+      <div data-reveal-stagger className="mt-8 flex md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 overflow-x-auto snap-x md:overflow-visible">
         {PLANS.map((plan) => {
           const price = plan.prices[currency][billing];
           const monthly = plan.prices[currency].monthly;

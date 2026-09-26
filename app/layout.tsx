@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/site/theme-provider";
+import { ScrollReveal } from "@/components/site/scroll-reveal";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
+          <ScrollReveal />
           <Toaster
             position="bottom-right"
             toastOptions={{

@@ -27,6 +27,7 @@ export function ConsolePreview() {
       <div className="band-invert">
         <div className="mx-auto max-w-[var(--container)] px-[var(--gutter)]">
           <div
+            data-reveal
             className="bracket mx-auto max-w-[1080px] border border-border text-foreground"
             style={{ backgroundImage: "var(--glow)", backgroundColor: "var(--card)" }}
           >

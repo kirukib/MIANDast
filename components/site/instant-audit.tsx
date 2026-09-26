@@ -47,24 +47,20 @@ export function InstantAudit() {
   return (
     <section id="audit" className="section container-rail scroll-mt-24">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6">
-        <div className="lg:col-span-5 lg:pr-10">
+        <div data-reveal className="lg:col-span-5 lg:pr-10">
           <Eyebrow>Free · no sign-up</Eyebrow>
           <TwoTone a="Check your headers" b="in ten seconds." className="text-h2 mt-6" />
-          <p className="mt-4 text-muted-foreground max-w-[44ch] text-pretty">
-            A passive read of the security posture your edge already exposes. Nothing is sent that a
-            browser wouldn&apos;t send.
-          </p>
           <BulletList
             className="mt-8"
             items={[
-              "Passive only: nothing is fuzzed",
-              "TLS, HSTS, CSP, CORS and cookie flags",
-              "A letter grade and checklist you can share",
+              "Passive. Nothing is fuzzed.",
+              "TLS, headers, CORS, cookies.",
+              "A grade you can share.",
             ]}
           />
         </div>
 
-        <div className="lg:col-span-7 bracket bg-card border border-border p-4 md:p-6">
+        <div data-reveal className="lg:col-span-7 bracket bg-card border border-border p-4 md:p-6">
           <form
             onSubmit={(e) => {
               e.preventDefault();

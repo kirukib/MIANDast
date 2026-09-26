@@ -4,15 +4,12 @@ import { FRAMEWORKS, INTEGRATIONS, VERIFIED_CERTIFICATIONS } from "@/lib/trust";
 export function LogosCompliance() {
   return (
     <section aria-label="Integrations and compliance" className="section container-rail">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-        <div className="lg:col-span-4">
+      <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+        <div className="lg:col-span-3">
           <Eyebrow>Integrates with</Eyebrow>
-          <p className="mt-5 text-[20px] leading-[1.3] tracking-[-0.01em] max-w-[24ch] text-balance">
-            Plugs into the pipeline <span className="text-muted-foreground">you already run.</span>
-          </p>
         </div>
 
-        <div className="lg:col-span-8 border-y border-border">
+        <div className="lg:col-span-9 border-y border-border">
           <div className="relative overflow-hidden mask-[linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
             <ul className="flex w-max animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
               {[...INTEGRATIONS, ...INTEGRATIONS].map((name, i) => (
@@ -30,7 +27,7 @@ export function LogosCompliance() {
         </div>
       </div>
 
-      <dl className="mt-12 hairline-grid grid-cols-1 md:grid-cols-[180px_1fr] font-mono text-[12px] uppercase tracking-[0.08em]">
+      <dl data-reveal className="mt-12 hairline-grid grid-cols-1 md:grid-cols-[180px_1fr] font-mono text-[12px] uppercase tracking-[0.08em]">
         {VERIFIED_CERTIFICATIONS.length > 0 ? (
           <>
             <dt className="px-4 py-3 text-muted-foreground">Certified</dt>

@@ -17,7 +17,7 @@ export function Coverage() {
         eyebrow="Coverage"
         title={{ a: "Twenty-six engines.", b: "Six attack classes." }}
       />
-      <div className="mt-12 md:mt-16 hairline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div data-reveal-stagger className="mt-12 md:mt-16 hairline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {CELLS.map((c, i) => (
           <Link
             key={c.title}

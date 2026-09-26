@@ -53,7 +53,7 @@ export function Faq() {
         <div className="lg:col-span-4 lg:sticky lg:top-28 self-start">
           <SectionHeader eyebrow="FAQ" title={{ a: "Straight answers", b: "before you scan." }} />
         </div>
-        <div className="lg:col-span-8">
+        <div data-reveal-stagger className="lg:col-span-8">
           {ITEMS.map((f, i) => {
             const isOpen = open === i;
             return (

@@ -19,7 +19,7 @@ export function AuditReports() {
   return (
     <section className="section container-rail">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-6 items-center">
-        <div className="lg:col-span-6 order-2 lg:order-1 flex justify-center lg:justify-start">
+        <div data-reveal className="lg:col-span-6 order-2 lg:order-1 flex justify-center lg:justify-start">
           <ReportPreview />
         </div>
         <div className="lg:col-span-5 lg:col-start-8 order-1 lg:order-2">
@@ -27,9 +27,9 @@ export function AuditReports() {
           <BulletList
             className="mt-8"
             items={[
-              "Findings mapped to SOC 2 CC7.1 and CC7.2",
-              "Signed timestamps on every finding",
-              "SARIF export for your existing toolchain",
+              "Mapped to SOC 2 CC7.1 / 7.2.",
+              "Signed timestamps.",
+              "SARIF export.",
             ]}
           />
           <Button variant="secondary" size="md" className="mt-8" asChild>

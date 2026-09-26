@@ -13,11 +13,11 @@ export function SafetyModel() {
       />
 
       {/* Bento: lead tile spans two columns, the canary runs full width (spec §5.5). */}
-      <div className="mt-12 md:mt-16 hairline-grid grid-cols-1 md:grid-cols-3">
+      <div data-reveal-stagger className="mt-12 md:mt-16 hairline-grid grid-cols-1 md:grid-cols-3">
         <GateTile
           id="01"
           title="Attestation gate"
-          body="A named engineer signs the scope before a single probe fires. Ticket and hash ride along with every run."
+          body="A named engineer signs every scope."
           className="md:col-span-2"
         >
           <AttestationMini />
@@ -25,14 +25,14 @@ export function SafetyModel() {
         <GateTile
           id="02"
           title="Boundary fence"
-          body="Third-party hosts are hard-blocked. Stripe, SendGrid and CDN origins never see a payload."
+          body="Third-party hosts never see a payload."
         >
           <FenceMini />
         </GateTile>
         <GateTile
           id="03"
           title="Adaptive canary"
-          body="A live latency probe watches the target. At +300% strain the pack throttles, then halts."
+          body="Throttles at +300% strain, then halts."
           className="md:col-span-3"
           wide
         >
@@ -170,12 +170,12 @@ function CanaryMini() {
 /** "Before / with" strip — the old legacy-vs-MIAN section, merged here (task 001 §6). */
 function BeforeWith() {
   const rows = [
-    ["Thread and DB exhaustion under blind payload bursts", "Sub-85ms adaptive backoff the moment the canary strains"],
-    ["Third-party spidering of Stripe, AWS and CDN origins", "Fenced hosts: third parties are hard-blocked"],
-    ["~40% false positives with no evidence attached", "Verified proofs with request trace and OAST callback"],
+    ["Exhausts threads and databases", "Backs off in under 85ms"],
+    ["Spiders third-party hosts", "Blocks everything out of scope"],
+    ["~40% false positives", "Every finding is proven"],
   ];
   return (
-    <div className="mt-6 border-x border-t border-border">
+    <div data-reveal className="mt-6 border-x border-t border-border">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="order-0 flex items-center gap-3 px-5 md:px-6 h-12 border-b border-border">
           <span className={cn(MONO, "text-muted-foreground")}>Traditional scanners · outage risk</span>

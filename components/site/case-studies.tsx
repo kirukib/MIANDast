@@ -32,7 +32,7 @@ export function CaseStudies() {
         eyebrow="Case studies"
         title={{ a: "Production stories,", b: "not slideware." }}
       />
-      <div className="mt-12 md:mt-16 -mx-[var(--gutter)] px-[var(--gutter)] md:mx-0 md:px-0 flex md:grid md:grid-cols-3 gap-4 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0">
+      <div data-reveal-stagger className="mt-12 md:mt-16 -mx-[var(--gutter)] px-[var(--gutter)] md:mx-0 md:px-0 flex md:grid md:grid-cols-3 gap-4 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0">
         {CASES.map((c) => (
           <Link
             key={c.title}
@@ -43,8 +43,7 @@ export function CaseStudies() {
               <span className="eyebrow !py-1">{c.tag}</span>
               <span className="font-mono text-[11px] text-muted-foreground nums">{c.date}</span>
             </div>
-            <h3 className="mt-8 text-[20px] leading-[1.3] font-medium tracking-[-0.01em] text-balance">{c.title}</h3>
-            <p className="mt-2 mb-8 text-[15px] text-muted-foreground text-pretty">{c.result}</p>
+            <h3 className="mt-8 mb-10 text-[20px] leading-[1.3] font-medium tracking-[-0.01em] text-balance">{c.title}</h3>
             <div className="mt-auto pt-4 flex items-end justify-between border-t border-border">
               <p>
                 <span className="block text-[32px] leading-none tracking-[-0.02em] nums">{c.metric[0]}</span>

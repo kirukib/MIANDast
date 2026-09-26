@@ -5,26 +5,14 @@ import { Button } from "@/components/ui/button";
 export function Founder() {
   return (
     <section id="team" className="section container-rail">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      <div data-reveal-stagger className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <div className="lg:col-span-5 bg-card border border-border p-6 md:p-10 flex flex-col">
           <Eyebrow>Founder</Eyebrow>
           <TwoTone a="Built to test production" b="without collateral damage." className="text-h2 mt-6" />
-          <p className="mt-5 text-muted-foreground max-w-[46ch] text-pretty">
-            Dave Mian designs MIAN DAST around attestation gates, boundary fences and adaptive
-            canaries, so security teams can scan live systems without gambling uptime.
+          <p className="mt-5 mb-10 text-muted-foreground max-w-[40ch] text-pretty">
+            Dave Mian built MIAN DAST so teams can scan live systems without risking uptime.
           </p>
-          <div aria-hidden className="flex-1 min-h-10" />
-          <dl className="grid grid-cols-2 border-t border-border">
-            <div className="pt-4 pr-4">
-              <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">Based in</dt>
-              <dd className="mt-1 font-mono text-[13px] uppercase tracking-[0.08em]">Abu Dhabi, UAE</dd>
-            </div>
-            <div className="pt-4 pl-4 border-l border-border">
-              <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">Role</dt>
-              <dd className="mt-1 font-mono text-[13px] uppercase tracking-[0.08em]">Principal architect</dd>
-            </div>
-          </dl>
-          <Button variant="secondary" size="sm" className="mt-6 w-fit" asChild>
+          <Button variant="secondary" size="sm" className="mt-auto w-fit" asChild>
             <Link href="/about">About MIAN →</Link>
           </Button>
         </div>

@@ -7,6 +7,8 @@ import { Eyebrow, TwoTone } from "@/components/site/primitives";
 import { HERO_STATS } from "@/lib/trust";
 import { cn, r2 } from "@/lib/utils";
 
+const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
+
 const CHAPTERS = ["0:00 Threat", "0:03 Zero downtime", "0:07 AI guardrail", "0:11 Fix-as-code"];
 
 export function Hero() {
@@ -15,23 +17,24 @@ export function Hero() {
       {/* Hero frame: a hairline box that joins the rails, stat cells as its bottom row (spec §5.2). */}
       <div className="md:-mx-[var(--gutter)] md:border-y border-border">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center py-10 md:px-[var(--gutter)] lg:py-10 lg:min-h-[560px]">
-          <div className="order-2 lg:order-1 lg:col-span-5">
+          <div className="order-2 lg:order-1 lg:col-span-5 anim-rise" style={d(280)}>
             <ScopeFenceVisual />
           </div>
 
           <div className="order-1 lg:order-2 lg:col-span-7 lg:pl-8">
-            <Eyebrow>Safe-by-default DAST</Eyebrow>
+            <Eyebrow className="anim-rise">Safe-by-default DAST</Eyebrow>
             <TwoTone
               as="h1"
               a="Continuous security testing"
               b="with zero collateral outages."
-              className="text-display mt-6 max-w-[18ch]"
+              className="text-display mt-6 max-w-[18ch] anim-rise"
+              style={d(80)}
             />
-            <p className="mt-5 text-[18px] leading-[1.55] text-muted-foreground max-w-[52ch] text-pretty">
-              Scanners that hammer production blindly take it down. MIAN DAST signs every scope,
-              fences every host, and throttles on the first sign of strain.
+            <p style={d(160)} className="anim-rise mt-5 text-[18px] leading-[1.55] text-muted-foreground max-w-[52ch] text-pretty">
+              Blind scanners take production down. MIAN DAST signs every scope, fences every host
+              and backs off at the first sign of strain.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="anim-rise mt-8 flex flex-wrap gap-3" style={d(240)}>
               <Button variant="primary" size="lg" asChild>
                 <Link href="/#audit">Run free audit</Link>
               </Button>
@@ -92,7 +95,7 @@ function DemoDialog() {
 
 function StatStrip() {
   return (
-    <dl className="grid grid-cols-2 md:grid-cols-4 border-t border-border">
+    <dl className="anim-rise grid grid-cols-2 md:grid-cols-4 border-t border-border" style={d(360)}>
       {HERO_STATS.map((s, i) => (
         <div
           key={s.label}

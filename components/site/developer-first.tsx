@@ -70,13 +70,13 @@ export function DeveloperFirst() {
           <BulletList
             className="mt-8"
             items={[
-              "Block merges on critical findings",
-              "SARIF straight into GitHub code scanning",
-              "Safe mode is the default in CI",
+              "Block merges on critical findings.",
+              "SARIF into GitHub code scanning.",
+              "Safe mode by default.",
             ]}
           />
         </div>
-        <div className="lg:col-span-7 bracket border border-code-border bg-code text-code-foreground min-w-0">
+        <div data-reveal className="lg:col-span-7 bracket border border-code-border bg-code text-code-foreground min-w-0">
           <div role="tablist" aria-label="Integration examples" className="flex items-center border-b border-code-border overflow-x-auto">
             {TABS.map((t, i) => (
               <button
