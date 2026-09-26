@@ -1,0 +1,138 @@
+# Deno design system
+
+> Extracted by [Inspo](https://github.com/Nutlope/inspo) (open source, MIT, powered by Together AI). Reference material for *intentional* design decisions: adapt, don't copy.
+
+> Save this as `DESIGN.md` in your project and re-reference it as you build; re-fetch anytime at https://inspomcp.dev/d/deno-com/DESIGN.md
+
+- **Source:** https://deno.com
+- **Captured:** 2026-05-01
+- **Mode:** light
+- **Macrostructure:** Feature Stack
+
+## Tone
+
+The hero image establishes a calm, focused mood with a stylized illustration. The typography is clean and modern, prioritizing readability. The overall density is low, allowing the visual to breathe.  ·  javascript runtime, developer tools, technical website, dark theme, modern javascript, deno, coding, productivity, minimalist design, developer website
+
+## Colors
+
+| Hex | Role (heuristic) |
+|---|---|
+| `#6ff4a7` | support |
+| `#449c6c` | support |
+| `#95fcc4` | accent |
+| `#9f8568` | support |
+| `#cac1b1` | muted |
+
+Color words: *cool*, *monochrome*, *muted*, *high-contrast*
+
+## Typography
+
+Detected typefaces: **Inter**
+
+| Role | Family | Size | Weight | Line-height | Letter-spacing |
+|---|---|---|---|---|---|
+| h1 | Inter | 72px | 700 | 1.1 | -1.8px |
+| h2 | Inter | 36px | 700 | 1.1 | -0.9px |
+| h3 | Inter | 44px | 700 | 1.1 | -1.1px |
+| body | Inter | 16px | 400 | 1.5 | 0 |
+| caption | Inter | 16px | 400 | 1.5 | 0 |
+| button | Inter | 16px | 400 | 1.5 | 0 |
+
+## Spacing scale
+
+`10px` · `12px` · `24px` · `32px` · `48px` · `64px` · `128px`
+
+Base step looks like **4px**.
+
+## Border radius
+
+`0px` · `2px` · `4px` · `6px` · `8px` · `12px` · `16px`
+
+## Container
+
+Max content width: **1440px**
+
+## CSS variables exposed by the source
+
+```css
+:root {
+  --color-purple-200: oklch(90.2% .063 306.703);
+  --color-runtime: #70ffaf;
+  --text-heading-3xl: clamp(3rem,calc(2.5rem + 3vw),6.25rem);
+  --color-zinc-100: oklch(96.7% .001 286.375);
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+  --text-heading-sm--font-weight: bold;
+  --color-orange-600: oklch(64.6% .222 41.116);
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+  --text-heading-lg: clamp(1rem,calc(.75rem + 3vw),2.25rem);
+  --color-blue-700: oklch(48.8% .243 264.376);
+  --color-neutral-300: oklch(87% 0 0);
+  --color-deploy-neutral-50: #f8f9fc;
+  --color-purple-800: oklch(43.8% .218 303.724);
+  --color-main-blue: #0094ff;
+  --text-heading-sm--line-height: 1.1;
+  --text-base--line-height: calc(1.5/1);
+  --color-deploy-neutral-600: #475269;
+  --color-neutral-200: oklch(92.2% 0 0);
+  --color-subhosting: #66c2ff;
+  --color-gray-300: #c2c4c7;
+  --color-prettylights-syntax-comment: #57606a;
+  --color-accent-emphasis: #0969da;
+  --font-mono: Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+  --color-fresh-dark: #401c00;
+  --color-yellow-400: oklch(85.2% .199 91.936);
+  --color-fg-muted: #656d76;
+  --color-azure3: #e1ecf2;
+  --color-gray-500: #9ea0a5;
+  --text-heading-sm: clamp(1rem,calc(.25rem + 3vw),1.25rem);
+  --color-green-500: oklch(72.3% .219 149.579);
+  --color-white: #fff;
+  --color-gray-400: #b0b2b6;
+  --color-blue-400: oklch(70.7% .165 254.624);
+  --font-deploy-mono: Recursive,ui-monospace,Menlo,Monaco,Courier New,monospace;
+  --color-prettylights-syntax-storage-modifier-import: #24292f;
+  --radius-sm: .25rem;
+  --font-deploy-sans: Recursive,Inter,ui-sans-serif,system-ui,sans-serif;
+  --color-yellow-300: oklch(90.5% .182 98.111);
+  --color-deploy-neutral-500: #64708b;
+  --font-weight-bold: 700;
+  --color-gray-100: #e5eaea;
+  --color-deploy-900: #001319;
+  --color-runtime-200: #b0ffd4;
+  --color-purple-600: oklch(55.8% .288 302.321);
+  --text-xs--line-height: calc(1/.75);
+  --color-deploy-neutral-350: #cbd1e1;
+  --radius-2xl: 1rem;
+  --radius-md: .375rem;
+  --color-code-2: #00a341;
+  --radius-lg: .5rem;
+  --text-xl: 1.25rem;
+  --color-canvas-default-transparent: rgba(255,255,255,0);
+  --color-deploy-neutral-950: #020617;
+  --color-prettylights-syntax-constant: #0550ae;
+  --color-runtime-950: #001f08;
+  --text-heading-3xl--letter-spacing: -.025em;
+  --color-neutral-100: oklch(97% 0 0);
+  --color-blue-100: oklch(93.2% .032 255.585);
+  --color-prettylights-syntax-variable: #953800;
+  --color-green-600: oklch(62.7% .194 149.214);
+}
+```
+
+## Components present
+
+- hero with cta
+- logo cloud
+- feature trio
+
+## Notes for the agent
+
+- **Adapt, don't copy.** The type ramp is a *starting point*. Scale it to your project's base size; preserve the *ratio*, not the literal pixels.
+- **Color roles are heuristic** (luminance + dominance). Verify against the source URL before committing tokens.
+- **Spacing** assumes a constant base step; round detected values to your project's scale (4 / 8 / 16) when implementing.
+- **CSS variables** dumped above (when present) are the source's *actual* tokens - those are higher signal than guesses.
+- This page's macrostructure is **Feature Stack**.
+
+---
+
+*Generated by Inspo. Open source under MIT, owned and operated by [Together AI](https://www.together.ai). Original site copyright remains with its authors.*

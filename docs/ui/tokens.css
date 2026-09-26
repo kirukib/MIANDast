@@ -1,12 +1,21 @@
-@import "tailwindcss";
-@custom-variant dark (&:is(.dark *));
-
 /*
- * MIAN DAST — design tokens (from docs/ui/tokens.css)
+ * MIAN DAST — design tokens (monochrome, light-first + dark)
  * Source of truth: docs/ui/ui-spec.md §2
+ *
+ * Drop into app/globals.css (Tailwind v4 + shadcn/ui):
+ *   @import "tailwindcss";
+ *   @import "tw-animate-css";
+ *   @custom-variant dark (&:is(.dark *));
+ *   ...then paste everything below.
+ *
+ * Rules:
+ * - No brand accent. Colour only for semantic status (severity / success / error).
+ * - --subtle is for display text >= 24px only (≥3.2:1 on bg/card/secondary). Body copy uses --muted-foreground.
+ * - .band-invert flips a section to the opposite theme (used for the dark bands on the light page).
  */
 
 :root {
+  /* paper / ink */
   --background: #fafafa;
   --foreground: #0a0a0a;
   --card: #ffffff;
@@ -20,15 +29,16 @@
   --secondary-foreground: #0a0a0a;
   --muted: #f0f0f0;
   --muted-foreground: #666666;
-  --accent: #f0f0f0;
+  --accent: #f0f0f0; /* shadcn hover surface, not a brand colour */
   --accent-foreground: #0a0a0a;
 
-  --subtle: #858585;
+  --subtle: #858585; /* grey half of two-tone headlines */
   --border: #e6e6e6;
   --border-strong: #d4d4d4;
   --input: #d4d4d4;
   --ring: #0a0a0a;
 
+  /* semantic status only */
   --destructive: #dc2626;
   --sev-critical: #dc2626;
   --sev-high: #c2410c;
@@ -36,21 +46,26 @@
   --sev-low: #666666;
   --success: #15803d;
 
+  /* glow used behind hero visual / on dark bands (monochrome light, never hue) */
   --glow: radial-gradient(60% 60% at 50% 40%, rgb(255 255 255 / 0.9), transparent 70%);
 
+  /* geometry */
   --radius: 2px;
   --radius-card: 4px;
-  --bracket: 8px;
+  --bracket: 8px; /* corner-bracket tick length */
   --rail: 1px;
 
+  /* rhythm */
   --section-y: clamp(72px, 10vw, 128px);
   --gutter: 16px;
   --container: 1200px;
 
+  /* motion */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --dur-fast: 150ms;
   --dur-base: 200ms;
 
+  /* console / code surfaces are dark in both themes */
   --code: #0a0a0a;
   --code-foreground: #ededed;
   --code-border: #1f1f1f;
@@ -97,6 +112,7 @@
   --glow: radial-gradient(60% 60% at 50% 40%, rgb(255 255 255 / 0.08), transparent 70%);
 }
 
+/* In dark mode the "inverted" bands become a raised surface instead of flipping to light. */
 .dark .band-invert {
   --background: #111111;
   --card: #161616;
@@ -133,6 +149,7 @@
   --color-code-foreground: var(--code-foreground);
   --color-code-border: var(--code-border);
 
+  /* next/font: geist package exposes these variables */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -143,13 +160,14 @@
 
   --ease-out: var(--ease-out);
 
+  /* type scale (see spec §3) */
   --text-display: clamp(40px, 5vw, 64px);
   --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.03em;
   --text-h2: clamp(32px, 4vw, 44px);
   --text-h2--line-height: 1.1;
   --text-h2--letter-spacing: -0.02em;
-  --text-statement: clamp(44px, 5.5vw, 80px);
+  --text-statement: clamp(44px, 5.5vw, 80px); /* footer statement */
   --text-statement--line-height: 1;
   --text-statement--letter-spacing: -0.04em;
   --text-label: 11px;
@@ -159,7 +177,7 @@
 
 @layer base {
   * { border-color: var(--border); }
-  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  html { -webkit-font-smoothing: antialiased; }
   body {
     background: var(--background);
     color: var(--foreground);
@@ -179,14 +197,12 @@
 }
 
 @layer components {
+  /* Container: padding-inline ONLY so section block padding is never zeroed (spec §4). */
   .container-rail {
     max-width: var(--container);
     margin-inline: auto;
     padding-inline: var(--gutter);
     border-inline: var(--rail) solid var(--border);
-  }
-  @media (max-width: 767px) {
-    .container-rail { border-inline: none; }
   }
   .section { padding-block: var(--section-y); border-top: 1px solid var(--border); }
 
@@ -200,9 +216,11 @@
 
   .two-tone > .tone-2 { color: var(--subtle); }
 
+  /* Corner-bracket frame: four 8px L-ticks drawn on a ::before overlay,
+     so it composes with any background (e.g. --glow) on the element itself. */
   .bracket { position: relative; }
   .bracket::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    content: ""; position: absolute; inset: 0; pointer-events: none;
     --b: var(--bracket); --c: var(--border-strong);
     background:
       linear-gradient(var(--c), var(--c)) top left / var(--b) 1px,
@@ -221,32 +239,4 @@
     font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
   }
   .nums { font-variant-numeric: tabular-nums; }
-
-  .text-display {
-    font-size: var(--text-display);
-    line-height: var(--text-display--line-height);
-    letter-spacing: var(--text-display--letter-spacing);
-    font-weight: 400;
-  }
-  .text-h2 {
-    font-size: var(--text-h2);
-    line-height: var(--text-h2--line-height);
-    letter-spacing: var(--text-h2--letter-spacing);
-    font-weight: 400;
-  }
-  .text-statement {
-    font-size: var(--text-statement);
-    line-height: var(--text-statement--line-height);
-    letter-spacing: var(--text-statement--letter-spacing);
-    font-weight: 400;
-  }
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes fill {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
 }
