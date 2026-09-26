@@ -67,10 +67,34 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row md:items-center gap-3 justify-between font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
-          <p className="flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-success" aria-hidden />© 2026 MIAN DAST · 26/26
-            engines online
-          </p>
+          <div className="flex flex-col gap-1.5">
+            <p className="flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-success" aria-hidden />© 2026 MIAN DAST · 26/26
+              engines online
+            </p>
+            <p className="normal-case tracking-normal text-[11px]">
+              Designed by{" "}
+              <a
+                href="https://www.yaltopiatech.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/80 hover:text-foreground underline-offset-2 hover:underline"
+              >
+                Yaltopia Tech
+              </a>
+              <span aria-hidden className="mx-1.5 text-border-strong">
+                ·
+              </span>
+              <a
+                href="https://www.linkedin.com/company/yaltopiatech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground underline-offset-2 hover:underline"
+              >
+                LinkedIn
+              </a>
+            </p>
+          </div>
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <Link href="/privacy" className="hover:text-foreground">
               Privacy

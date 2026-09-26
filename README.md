@@ -3,6 +3,7 @@
 UI skeleton for **MIAN DAST** — safe-by-default dynamic application security testing. Redesigned from the live product site into an instrument-grade, open-source front end with a control-plane dash for reports and fleet admin.
 
 **License:** [MIT](LICENSE)  
+**Design:** [Yaltopia Tech](https://www.yaltopiatech.com/) · [LinkedIn](https://www.linkedin.com/company/yaltopiatech)  
 **Design source of truth:** [`docs/ui/ui-spec.md`](docs/ui/ui-spec.md) · [`docs/ui/tokens.css`](docs/ui/tokens.css) · [`docs/ui/references.md`](docs/ui/references.md)
 
 ## Before → after

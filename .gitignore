@@ -23,6 +23,11 @@
 # misc
 .DS_Store
 *.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+**/secrets.*
 
 # debug
 npm-debug.log*
@@ -34,7 +39,7 @@ yarn-error.log*
 .env*
 !.env.example
 
-# vercel
+# vercel (local link metadata — do not publish org/project IDs)
 .vercel
 .vercel/
 
