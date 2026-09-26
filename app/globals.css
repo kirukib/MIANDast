@@ -393,6 +393,120 @@
   .animate-\[bug-ping_2\.4s_ease-out_infinite\] {
     animation: none !important;
   }
+  .ft-drawing .ft-draw,
+  .ft-drawing .ft-bus,
+  .ft-drawing .ft-led,
+  .ft-drawing .ft-node,
+  .ft-drawing .ft-pads rect,
+  .ft-drawing .ft-fence,
+  .ft-drawing .ft-x {
+    animation: none !important;
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Footer topology: draw-on once, idle activity, intensify on hover */
+@keyframes ft-draw-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ft-flow {
+  to { stroke-dashoffset: -32; }
+}
+@keyframes ft-node-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes ft-led-blink {
+  0%, 100% { opacity: 0.25; }
+  40% { opacity: 1; }
+  60% { opacity: 0.4; }
+}
+@keyframes ft-pad-scan {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+@keyframes ft-x-flash {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.ft-drawing svg {
+  color: color-mix(in srgb, var(--foreground) 30%, transparent);
+  transition: color 200ms var(--ease-out);
+}
+.ft-drawing.is-hot svg {
+  color: color-mix(in srgb, var(--foreground) 58%, transparent);
+}
+.ft-drawing.is-hot svg .text-border {
+  color: color-mix(in srgb, var(--foreground) 30%, transparent);
+}
+
+.ft-drawing .ft-draw path[pathLength],
+.ft-drawing .ft-draw ellipse,
+.ft-drawing path.ft-bus {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.ft-drawing.is-in .ft-draw path[pathLength],
+.ft-drawing.is-in .ft-draw ellipse,
+.ft-drawing.is-in:not(.is-drawn) path.ft-bus {
+  animation: ft-draw-in 1.1s var(--ease-out) both;
+  animation-delay: var(--ft-d, 0ms);
+}
+
+/* After draw-on completes: probe buses keep flowing */
+.ft-drawing.is-drawn path.ft-bus {
+  stroke-dasharray: 6 8;
+  stroke-dashoffset: 0;
+  animation: ft-flow 2.6s linear infinite;
+}
+.ft-drawing.is-hot.is-drawn path.ft-bus {
+  animation-duration: 1.1s;
+}
+
+.ft-drawing path.ft-fence {
+  stroke-dasharray: 6 4;
+  stroke-dashoffset: 0;
+  opacity: 0;
+}
+.ft-drawing.is-in path.ft-fence {
+  animation: fadein 600ms var(--ease-out) both;
+  animation-delay: 120ms;
+}
+.ft-drawing.is-hot path.ft-fence {
+  animation: fadein 600ms var(--ease-out) both, ft-flow 3.2s linear infinite;
+  animation-delay: 0ms, 0ms;
+}
+
+.ft-drawing.is-live .ft-node {
+  animation: ft-node-pulse 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--ft-i, 0) * 180ms);
+}
+.ft-drawing.is-hot .ft-node {
+  animation-duration: 0.85s;
+}
+
+.ft-drawing.is-live .ft-led {
+  animation: ft-led-blink 2.2s steps(1, end) infinite;
+  animation-delay: calc(var(--ft-i, 0) * 120ms);
+}
+.ft-drawing.is-hot .ft-led {
+  animation-duration: 0.95s;
+}
+
+.ft-drawing.is-live .ft-pads rect {
+  animation: ft-pad-scan 2.8s ease-in-out infinite;
+  animation-delay: calc(var(--ft-i, 0) * 40ms);
+}
+.ft-drawing.is-hot .ft-pads rect {
+  animation-duration: 1.15s;
+}
+
+.ft-drawing.is-hot .ft-x {
+  animation: ft-x-flash 0.7s ease-in-out infinite;
 }
 
 /* Staggered entrance inside a component: set --d for the delay. */
