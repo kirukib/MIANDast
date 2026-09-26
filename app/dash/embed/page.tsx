@@ -17,7 +17,7 @@ export default function EmbedGuidePage() {
   <iframe
     src="${origin}/embed/report"
     title="MIAN DAST report"
-    style="width:360px;height:520px;border:1px solid #1f1f1f;background:#0a0a0a;border-radius:2px"
+    style="width:300px;height:240px;border:1px solid #1f1f1f;background:#0a0a0a"
     allow="clipboard-write"
   ></iframe>
 </div>
@@ -95,7 +95,7 @@ export default function EmbedGuidePage() {
           <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1a1]">
             Live host preview · hover the badge
           </p>
-          <EmbedHostPreview height={360} />
+          <EmbedHostPreview height={260} />
         </div>
       </div>
     </ConsoleShell>

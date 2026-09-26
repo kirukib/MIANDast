@@ -17,12 +17,14 @@ const WORD_PATHS = [
 /**
  * Brand mark from public/Logo.svg — MIAN icon + rounded DAST plate with angular/conic gradient.
  * Colors flip with light/dark via --logo-* tokens in globals.css.
+ * `variant="mark"` = service icon only (no DAST wordmark) for chat/embed bubbles.
  */
 export function BrandLogo({
   className,
   href = "/",
   priority,
   linked = true,
+  variant = "full",
 }: {
   className?: string;
   href?: string;
@@ -30,44 +32,59 @@ export function BrandLogo({
   priority?: "nav" | "footer";
   /** Set false for decorative marks (embed chrome, badges). */
   linked?: boolean;
+  /** `mark` = MIAN icon only, no wordmark text. */
+  variant?: "full" | "mark";
 }) {
   const size = priority === "footer" ? "h-9 md:h-11" : "h-7";
+  const isMark = variant === "mark";
 
   const mark = (
     <span
       className={cn(
-        "relative inline-block shrink-0",
-        size,
-        "aspect-[1112/278]",
+        "relative inline-block shrink-0 overflow-hidden",
+        isMark ? "h-8 aspect-square rounded-[3px]" : cn(size, "aspect-[1112/278]"),
         className,
       )}
       aria-hidden={linked ? undefined : true}
     >
-      {/* DAST plate — angular gradient from Logo.svg (from 90deg, #000 → #666) */}
-      <span
-        className="absolute brand-logo-plate"
-        style={{
-          left: "28.76%",
-          top: "4.03%",
-          width: "71.22%",
-          height: "95.68%",
-          borderRadius: "3.6% / 3.76%",
-          background:
-            "conic-gradient(from 90deg at 50% 50%, var(--logo-from) 0deg, var(--logo-to) 360deg)",
-        }}
-      />
-      <svg
-        viewBox="0 0 1112 278"
-        className="relative h-full w-auto block"
-        xmlns="http://www.w3.org/2000/svg"
-        role={linked ? undefined : "img"}
-        aria-label={linked ? undefined : "MIAN DAST"}
-      >
-        <path d={MARK_PATH} fill="var(--logo-mark)" />
-        {WORD_PATHS.map((d) => (
-          <path key={d.slice(0, 24)} d={d} fill="var(--logo-text)" />
-        ))}
-      </svg>
+      {isMark ? (
+        <svg
+          viewBox="0 0 270 278"
+          className="relative h-full w-full block"
+          xmlns="http://www.w3.org/2000/svg"
+          role={linked ? undefined : "img"}
+          aria-label={linked ? undefined : "MIAN"}
+        >
+          <path d={MARK_PATH} fill="var(--logo-mark)" />
+        </svg>
+      ) : (
+        <>
+          <span
+            className="absolute brand-logo-plate"
+            style={{
+              left: "28.76%",
+              top: "4.03%",
+              width: "71.22%",
+              height: "95.68%",
+              borderRadius: "3.6% / 3.76%",
+              background:
+                "conic-gradient(from 90deg at 50% 50%, var(--logo-from) 0deg, var(--logo-to) 360deg)",
+            }}
+          />
+          <svg
+            viewBox="0 0 1112 278"
+            className="relative h-full w-auto block"
+            xmlns="http://www.w3.org/2000/svg"
+            role={linked ? undefined : "img"}
+            aria-label={linked ? undefined : "MIAN DAST"}
+          >
+            <path d={MARK_PATH} fill="var(--logo-mark)" />
+            {WORD_PATHS.map((d) => (
+              <path key={d.slice(0, 24)} d={d} fill="var(--logo-text)" />
+            ))}
+          </svg>
+        </>
+      )}
     </span>
   );
 

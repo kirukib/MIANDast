@@ -119,7 +119,7 @@ export default function ReportDetailPage() {
         </p>
         <EmbedHostPreview
           src={`/embed/report?id=${encodeURIComponent(report.id)}&preview=1`}
-          height={380}
+          height={260}
         />
       </div>
 
