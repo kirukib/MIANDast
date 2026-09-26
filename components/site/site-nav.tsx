@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, transitions } from "@/components/motion";
 
 const LINKS = [
   { href: "/#safety", label: "Product" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#pricing", label: "Pricing" },
+  { href: "/dash", label: "Dash" },
   { href: "/docs", label: "Docs" },
   { href: "/#case-studies", label: "Cases" },
 ];
@@ -33,14 +35,15 @@ export function SiteNav() {
         Skip to content
       </a>
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3">
-        <nav
+        <motion.nav
           className={cn(
-            "bracket relative flex w-full max-w-[880px] items-center gap-3 px-3 py-2 transition-[background,backdrop-filter] duration-200",
+            "bracket relative flex w-full max-w-[880px] items-center gap-3 px-3 py-2",
             scrolled
               ? "bg-card/90 backdrop-blur-[8px] border border-border"
               : "bg-card border border-border",
           )}
           aria-label="Primary"
+          transition={transitions.base}
         >
           <Link
             href="/"
@@ -65,7 +68,7 @@ export function SiteNav() {
 
           <div className="ml-auto hidden md:flex items-center gap-2">
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/sign-in">Sign in</Link>
+              <Link href="/dash">Sign in</Link>
             </Button>
             <Button variant="primary" size="sm" asChild>
               <Link href="/#audit">Run free audit</Link>
@@ -80,44 +83,57 @@ export function SiteNav() {
           >
             Menu
           </button>
-        </nav>
+        </motion.nav>
       </header>
 
-      {open ? (
-        <div className="fixed inset-0 z-[60] bg-background flex flex-col p-6 md:hidden">
-          <div className="flex justify-between items-center">
-            <span className="font-mono text-[13px] uppercase tracking-[0.08em]">MIAN DAST</span>
-            <button type="button" className="label-mono" onClick={() => setOpen(false)}>
-              Close
-            </button>
-          </div>
-          <ul className="mt-10 flex flex-col gap-4">
-            {LINKS.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="text-[28px] font-normal"
-                  onClick={() => setOpen(false)}
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-background flex flex-col p-6 md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={transitions.base}
+          >
+            <div className="flex justify-between items-center">
+              <span className="font-mono text-[13px] uppercase tracking-[0.08em]">MIAN DAST</span>
+              <button type="button" className="label-mono" onClick={() => setOpen(false)}>
+                Close
+              </button>
+            </div>
+            <ul className="mt-10 flex flex-col gap-4">
+              {LINKS.map((l, i) => (
+                <motion.li
+                  key={l.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ ...transitions.reveal, delay: i * 0.04 }}
                 >
-                  {l.label}
+                  <Link
+                    href={l.href}
+                    className="text-[28px] font-normal"
+                    onClick={() => setOpen(false)}
+                  >
+                    {l.label}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-auto flex flex-col gap-3">
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/dash" onClick={() => setOpen(false)}>
+                  Sign in
                 </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-auto flex flex-col gap-3">
-            <Button variant="secondary" size="lg" asChild>
-              <Link href="/sign-in" onClick={() => setOpen(false)}>
-                Sign in
-              </Link>
-            </Button>
-            <Button variant="primary" size="lg" asChild>
-              <Link href="/#audit" onClick={() => setOpen(false)}>
-                Run free audit
-              </Link>
-            </Button>
-          </div>
-        </div>
-      ) : null}
+              </Button>
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/#audit" onClick={() => setOpen(false)}>
+                  Run free audit
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

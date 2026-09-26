@@ -14,6 +14,7 @@ import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { FinalCta } from "@/components/site/final-cta";
 import { SiteFooter } from "@/components/site/site-footer";
+import { FadeIn } from "@/components/motion";
 
 export default function HomePage() {
   return (
@@ -21,19 +22,45 @@ export default function HomePage() {
       <SiteNav />
       <main id="main">
         <Hero />
-        <ConsolePreview />
-        <LogosCompliance />
-        <SafetyModel />
-        <InstantAudit />
-        <HowItWorks />
-        <Coverage />
-        <DeveloperFirst />
-        <AuditReports />
-        <CaseStudies />
-        <Founder />
-        <Pricing />
-        <Faq />
-        <FinalCta />
+        <FadeIn>
+          <ConsolePreview />
+        </FadeIn>
+        <FadeIn>
+          <LogosCompliance />
+        </FadeIn>
+        <FadeIn>
+          <SafetyModel />
+        </FadeIn>
+        <FadeIn>
+          <InstantAudit />
+        </FadeIn>
+        <FadeIn>
+          <HowItWorks />
+        </FadeIn>
+        <FadeIn>
+          <Coverage />
+        </FadeIn>
+        <FadeIn>
+          <DeveloperFirst />
+        </FadeIn>
+        <FadeIn>
+          <AuditReports />
+        </FadeIn>
+        <FadeIn>
+          <CaseStudies />
+        </FadeIn>
+        <FadeIn>
+          <Founder />
+        </FadeIn>
+        <FadeIn>
+          <Pricing />
+        </FadeIn>
+        <FadeIn>
+          <Faq />
+        </FadeIn>
+        <FadeIn>
+          <FinalCta />
+        </FadeIn>
       </main>
       <SiteFooter />
     </>

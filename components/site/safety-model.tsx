@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { SectionHeader } from "@/components/site/primitives";
-import { cn, r2 } from "@/lib/utils";
+import { CanaryLatencyChart } from "@/components/site/canary-latency-chart";
+import { cn } from "@/lib/utils";
 
 const MONO = "font-mono text-[11px] uppercase tracking-[0.08em]";
 
@@ -36,7 +39,7 @@ export function SafetyModel() {
           className="md:col-span-3"
           wide
         >
-          <CanaryMini />
+          <CanaryLatencyChart />
         </GateTile>
       </div>
 
@@ -69,7 +72,14 @@ function GateTile({
         className,
       )}
     >
-      <div className={cn("dot-grid border border-border p-4 h-[168px] flex flex-col justify-center", wide && "md:order-2 md:h-[184px]")}>
+      <div
+        className={cn(
+          "dot-grid border border-border p-4 flex flex-col justify-center",
+          wide ? "md:order-2 min-h-[184px] h-auto" : "h-[168px]",
+        )}
+        onClick={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
       <div className={cn(wide && "md:order-1")}>
@@ -132,38 +142,6 @@ function FenceMini() {
         </li>
       ))}
     </ul>
-  );
-}
-
-function CanaryMini() {
-  // latency samples (ms); threshold at +300% of the 22ms baseline
-  const pts = [22, 23, 22, 24, 23, 25, 24, 27, 33, 48, 71, 88, 64, 41, 30, 26, 24, 23, 24, 22, 23, 22];
-  const W = 560;
-  const H = 120;
-  const max = 100;
-  const x = (i: number) => r2((i / (pts.length - 1)) * W);
-  const y = (v: number) => r2(H - 12 - (v / max) * (H - 24));
-  const path = pts.map((v, i) => `${i ? "L" : "M"}${x(i)} ${y(v)}`).join(" ");
-  const thresh = y(88);
-  const hit = 11;
-  return (
-    <div aria-hidden className="w-full">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[112px] text-foreground" fill="none" preserveAspectRatio="none">
-        {[0.25, 0.5, 0.75].map((f) => (
-          <line key={f} x1="0" x2={W} y1={r2(H * f)} y2={r2(H * f)} stroke="var(--border)" />
-        ))}
-        <line x1="0" x2={W} y1={thresh} y2={thresh} stroke="currentColor" strokeDasharray="4 4" opacity="0.5" />
-        <path d={path} stroke="currentColor" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-        <line x1={x(hit)} x2={x(hit)} y1="0" y2={H} stroke="currentColor" opacity="0.3" />
-      </svg>
-      <div className="mt-2 flex flex-wrap justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
-        <span>Baseline 22ms</span>
-        <span className="text-foreground flex items-center gap-1.5">
-          <span className="size-1.5 bg-foreground" /> Throttled +300% · 85ms backoff
-        </span>
-        <span>Recovered</span>
-      </div>
-    </div>
   );
 }
 

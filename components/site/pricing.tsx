@@ -13,6 +13,7 @@ import {
 } from "@/lib/pricing";
 import { startCheckout } from "@/lib/integrations";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, transitions } from "@/components/motion";
 
 export function Pricing({ showCompareLink = true }: { showCompareLink?: boolean }) {
   const [billing, setBilling] = useState<Billing>("monthly");
@@ -102,10 +103,19 @@ export function Pricing({ showCompareLink = true }: { showCompareLink?: boolean 
               ) : null}
               <p className="font-mono text-[12px] uppercase tracking-[0.08em]">{plan.name}</p>
               <p className="mt-1 text-xs text-muted-foreground">{plan.segment}</p>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-[40px] leading-none tracking-[-0.02em] nums">
-                  {formatPrice(currency, price)}
-                </span>
+              <div className="mt-4 flex items-baseline gap-1 min-h-[40px]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={`${plan.id}-${currency}-${billing}-${price}`}
+                    className="text-[40px] leading-none tracking-[-0.02em] nums inline-block"
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={transitions.fast}
+                  >
+                    {formatPrice(currency, price)}
+                  </motion.span>
+                </AnimatePresence>
                 <span className="font-mono text-[11px] text-muted-foreground">/mo</span>
               </div>
               {billing === "annual" ? (
